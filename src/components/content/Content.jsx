@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 
@@ -12,8 +12,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./content.css";
+import { useFetch } from "../../hooks/useFetch";
+import { fetchAvailableMeals } from "../../util/http";
 
 function Content() {
+  const {data:meals,isLoading,error} = useFetch(fetchAvailableMeals,[]);
   useEffect(() => {
     new SwiperCore(".slide-wrapper", {
       loop: true,
@@ -42,7 +45,7 @@ function Content() {
         },
       },
     });
-  }, []);
+  }, [meals]); // Reinitialize Swiper when meals change
 
   return (
     <section className="container-fluid">
@@ -127,91 +130,25 @@ function Content() {
         <div className="swiper">
           <div className="slide-wrapper">
             <div id="meals" className="swiper-wrapper">
-              <div className="meal-item swiper-slide">
-                <article>
-                  <img alt="Ma Cheese" src="/img/caesar-salad.jpg" />
-                  <div>
-                    <h3>Mac Cheese</h3>
-                    <p className="meal-item-price">$8.99</p>
-                    <p className="meal-item-description">
-                      Creamy cheddar cheese mixed with perfectly cooked
-                      macaroni, topped with crispy breadcrumbs. A classNameic
-                      comfort food.
+              {isLoading && <p>Loading meals...</p>}
+              {error && <p>Error: {error}</p>}
+              {!isLoading && !error && meals.map((meal) => (
+                <div key={meal.id} className="meal-item swiper-slide">
+                  <article>
+                    <img alt={meal.name}src={`http://localhost:3000/${meal.image}`} />
+                    <div>
+                      <h3>{meal.name}</h3>
+                      <p className="meal-item-price">${meal.price}</p>
+                      <p className="meal-item-description">
+                        {meal.description}
+                      </p>
+                    </div>
+                    <p className="meal-item-actions">
+                      <button className="button">Add to Cart</button>
                     </p>
-                  </div>
-                  <p className="meal-item-actions">
-                    <button className="button">Add to Cart</button>
-                  </p>
-                </article>
-              </div>
-              <div className="meal-item swiper-slide">
-                <article>
-                  <img alt="Ma Cheese" src="/img/caesar-salad.jpg" />
-                  <div>
-                    <h3>Mac Cheese</h3>
-                    <p className="meal-item-price">$8.99</p>
-                    <p className="meal-item-description">
-                      Creamy cheddar cheese mixed with perfectly cooked
-                      macaroni, topped with crispy breadcrumbs. A classNameic
-                      comfort food.
-                    </p>
-                  </div>
-                  <p className="meal-item-actions">
-                    <button className="button">Add to Cart</button>
-                  </p>
-                </article>
-              </div>
-              <div className="meal-item swiper-slide">
-                <article>
-                  <img alt="Ma Cheese" src="/img/caesar-salad.jpg" />
-                  <div>
-                    <h3>Mac Cheese</h3>
-                    <p className="meal-item-price">$8.99</p>
-                    <p className="meal-item-description">
-                      Creamy cheddar cheese mixed with perfectly cooked
-                      macaroni, topped with crispy breadcrumbs. A classNameic
-                      comfort food.
-                    </p>
-                  </div>
-                  <p className="meal-item-actions">
-                    <button className="button">Add to Cart</button>
-                  </p>
-                </article>
-              </div>
-              <div className="meal-item swiper-slide">
-                <article>
-                  <img alt="Ma Cheese" src="/img/caesar-salad.jpg" />
-                  <div>
-                    <h3>Mac Cheese</h3>
-                    <p className="meal-item-price">$8.99</p>
-                    <p className="meal-item-description">
-                      Creamy cheddar cheese mixed with perfectly cooked
-                      macaroni, topped with crispy breadcrumbs. A classNameic
-                      comfort food.
-                    </p>
-                  </div>
-                  <p className="meal-item-actions">
-                    <button className="button">Add to Cart</button>
-                  </p>
-                </article>
-              </div>
-              <div className="meal-item swiper-slide">
-                <article>
-                  <img alt="Ma Cheese" src="/img/caesar-salad.jpg" />
-                  <div>
-                    <h3>Mac Cheese</h3>
-                    <p className="meal-item-price">$8.99</p>
-                    <p className="meal-item-description">
-                      Creamy cheddar cheese mixed with perfectly cooked
-                      macaroni, topped with crispy breadcrumbs. A classNameic
-                      comfort food.
-                    </p>
-                  </div>
-                  <p className="meal-item-actions">
-                    <button className="button">Add to Cart</button>
-                  </p>
-                </article>
-              </div>
+                  </article>
+                </div>
+              ))}
             </div>
 
             <div className="swiper-pagination"></div>
