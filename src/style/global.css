@@ -1,0 +1,21 @@
+/* Link font google montserrat */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+/* biến dùng chung cho toàn bộ trang home */
+:root {
+  --background: linear-gradient(to bottom, #29251cf2, #2c2306f2);
+  --background-content: linear-gradient(#29251c, #2c2306);
+  --text-color: #d9e2f1;
+  --text-home: #ffc404;
+  --text-card: #1f1a09;
+  --background-hover: #ffab04;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html {
+  font-family: "Montserrat", sans-serif;
+  font-size: 62.5%;
+}

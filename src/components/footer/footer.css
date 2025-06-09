@@ -1,0 +1,30 @@
+footer {
+  font-size: 1.6rem;
+}
+/* css lại các icon hình tròn  */
+
+.circle-icon {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  border: none;
+  margin: 5px;
+  position: relative;
+
+  transition: all 0.3s ease-out;
+}
+
+.circle-icon:hover {
+  transform: translateY(-5px);
+  border: 1px solid #e9e8e8c1;
+  box-shadow: 0 0 10px #e9e8e8c1;
+}
+
+.circle-icon > i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6rem;
+  color: #fff;
+}

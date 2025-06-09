@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ffa9b516-5b7e-48ad-b39e-c8f3638cfd28",
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "$2b$10$v6s5r.7hWJLUEGvwbYWlgOQq.QjrvUP.jpRiI6.ikrY.fwshftURO"
+  },
+  {
+    "id": "e9db5f6a-b7b5-44ea-851b-76d4069431d6",
+    "name": "Khoa",
+    "email": "OXplakhoa@gmail.com",
+    "password": "$2b$10$uAs1bDlpMdHMx5PFhAAjCOi/y331haL1evQBmtmSbvsQOxQqXV7ve"
+  }
+]

@@ -1,0 +1,214 @@
+section {
+  background: var(--background-content);
+}
+
+.overlay-dark {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-caption {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  z-index: 1;
+}
+.text-caption h1 {
+  font-size: 4vw;
+}
+/* các item card */
+.swiper {
+  width: 90%;
+}
+
+.slide-wrapper {
+  overflow: hidden;
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto 4.5rem;
+}
+.slide-wrapper .swiper-pagination-bullet {
+  background-color: var(--text-color);
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.slide-wrapper .slide-swiper-button {
+  color: var(--text-color);
+  margin-top: -5rem;
+  transition: 0.2s ease;
+}
+.slide-wrapper .slide-swiper-button:hover {
+  color: var(--background-hover);
+}
+
+.meal-item {
+  /* thẻ bình thường nằm ngoài slideshow thì nên để width */
+  /* width: 40rem;
+  height: 59rem;
+  margin: 1.5rem; */
+
+  user-select: none;
+  background-color: #1d1a16;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.meal-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.meal-item article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.meal-item img {
+  width: 100%;
+  height: 32rem;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.meal-item:hover img {
+  transform: scale(1.05);
+}
+
+.meal-item h3 {
+  font-size: 2.4rem;
+  color: var(--text-color);
+  font-weight: bold;
+  margin: 1.2rem 0;
+  transition: color 0.3s ease;
+}
+
+.meal-item:hover h3 {
+  color: #ffc404;
+}
+
+.meal-item-description {
+  font-size: 1.6rem;
+  margin: 1.6rem;
+  color: #a4a4a4;
+  transition: color 0.3s ease;
+}
+
+.meal-item .meal-item-description:hover {
+  color: var(--text-color);
+}
+
+.meal-item-price {
+  display: inline-block;
+  background-color: #312c1d;
+  color: #ffc404;
+  font-size: 1.44rem;
+  font-weight: bold;
+  padding: 0.8rem 3.2rem;
+  margin: 0;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.meal-item:hover .meal-item-price {
+  background-color: #ffc404;
+  color: #1d1a16;
+  transform: scale(1.05);
+}
+
+.meal-item-actions {
+  margin-bottom: 2.4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.meal-item:hover .meal-item-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* nút của item-card */
+
+.button {
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.button:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+.button {
+  font-size: 1.92rem;
+
+  cursor: pointer;
+  background-color: var(--text-home);
+  border: 1px solid var(--text-home);
+  color: var(--text-card);
+  padding: 1.2rem 2.4rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 196, 4, 0.2);
+}
+
+.button:hover,
+.button:active {
+  background-color: #ffab04;
+  border-color: #ffab04;
+  color: var(--text-card);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 196, 4, 0.3);
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.button:hover::before {
+  width: 300%;
+  height: 300%;
+}
