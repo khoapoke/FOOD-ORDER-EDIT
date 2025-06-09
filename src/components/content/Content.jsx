@@ -77,8 +77,8 @@ function Content() {
             <img src="/img/Home1_1920x960.png" className="d-block w-100" />
             <div className="overlay-dark"></div>
             <div className="text-caption">
-              <h1>RESTAURANT</h1>
-              <h1>DELICIOUS FOOD</h1>
+              <h1>NHÀ HÀNG</h1>
+              <h1>THỨC ĂN NGON</h1>
             </div>
           </div>
           <div className="carousel-item">
