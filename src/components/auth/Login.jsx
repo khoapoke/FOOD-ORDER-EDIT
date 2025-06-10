@@ -1,11 +1,14 @@
 import { useState } from "react";
 import "./Login.css";
+import Header from "../header/Header";
 
 export default function Login() {
   const [isActive, setIsActive] = useState(false);
 
   return (
+    <>
     <div className={`container${isActive ? " active" : ""}`} id="container">
+      
       {/* Register Form */}
       <div className="form-container sign-up">
         <form>
@@ -62,5 +65,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 } 

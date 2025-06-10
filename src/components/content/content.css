@@ -244,10 +244,10 @@ section {
   color: #ff4d29;
 }
 .customer-feedback-text {
-  font-size: 1.2rem;
+  font-size: 2.5rem;
   color: #444;
   margin-bottom: 2rem;
-  max-width: 500px;
+  max-width: 1000px;
 }
 .customer-profile {
   display: flex;
@@ -285,30 +285,6 @@ section {
 }
 .feedback-dots .dot.active {
   opacity: 1;
-}
-.customer-feedback-right {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 320px;
-}
-.chef-bg-shape {
-  position: absolute;
-  right: 0;
-  width: 320px;
-  height: 380px;
-  background: #ffb200;
-  border-radius: 1.5rem 0 0 1.5rem;
-  z-index: 1;
-}
-.chef-img {
-  position: relative;
-  z-index: 2;
-  width: 300px;
-  height: auto;
-  object-fit: contain;
 }
 
 /* About Us Section */

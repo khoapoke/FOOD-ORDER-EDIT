@@ -236,9 +236,6 @@ function Content() {
                 </div>
               </div>
               {/* Pagination & Navigation */}
-              <div className="swiper-pagination"></div>
-              <div className="swiper-button-prev"></div>
-              <div className="swiper-button-next"></div>
             </div>
           </div>
           <div className="customer-feedback-right">
