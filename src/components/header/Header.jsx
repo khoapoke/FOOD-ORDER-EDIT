@@ -24,7 +24,7 @@ function Header() {
         </button>
         <ul className="header_list">
           <li className="home">
-            <a href="#">
+            <a href="/">
               <div className="title">
                 <img src="/img/logo.jpg" />
                 <p>Restaurant</p>
@@ -32,12 +32,12 @@ function Header() {
             </a>
           </li>
           <li>
-            <a className="header_list-item" href="#">
+            <a className="header_list-item" href="/menu">
               Meals
             </a>
           </li>
           <li>
-            <a className="header_list-item" href="#">
+            <a className="header_list-item" href="#about">
               About Us
             </a>
           </li>
@@ -46,7 +46,7 @@ function Header() {
             <button className="button">Cart</button>
           </li>
           <li>
-            <a className="header_list-item" href="#">
+            <a className="header_list-item" href="/login">
               Sign In
             </a>
           </li>
