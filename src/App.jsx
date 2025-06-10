@@ -6,6 +6,7 @@ import AdminPage from "./components/admin/AdminPage.jsx";
 import AboutUs1 from "./aboutus/AboutUs1.jsx";
 import AboutUs2 from "./aboutus/AboutUs2.jsx";
 import Menu from "./menu/Menu.jsx";
+import Login from "./components/auth/Login.jsx";
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
             <Footer />
           </>
         } />
+
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/aboutus/1" element={<AboutUs1/>}/>
         <Route path="/aboutus/2" element={<AboutUs2/>}/>

@@ -46,7 +46,7 @@ function Header() {
             <button className="button">Cart</button>
           </li>
           <li>
-            <a className="header_list-item" href="#">
+            <a className="header_list-item" href="/login">
               Sign In
             </a>
           </li>
