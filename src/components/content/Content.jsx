@@ -45,6 +45,22 @@ function Content() {
         },
       },
     });
+    // Swiper cho phần đánh giá khách hàng
+    new SwiperCore(".customer-feedback-swiper", {
+      loop: true,
+      grabCursor: true,
+      spaceBetween: 20,
+      pagination: {
+        el: ".customer-feedback-swiper .swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+      },
+      navigation: {
+        nextEl: ".customer-feedback-swiper .swiper-button-next",
+        prevEl: ".customer-feedback-swiper .swiper-button-prev",
+      },
+      slidesPerView: 1,
+    });
   }, [meals]); // Reinitialize Swiper when meals change
 
   return (
@@ -158,7 +174,7 @@ function Content() {
           </div>
         </div>
       </div>
-      {/* dòng chứa thực đơn hôm nay */}
+      {/* dòng chứa thực đơn hôm nay
       <div className="row">
         <h1
           className="text-uppercase text-center"
@@ -166,9 +182,96 @@ function Content() {
         >
           thực đơn hôm nay
         </h1>
-      </div>
+      </div> */}
 
       {/* thêm các dòng bố sung,..... */}
+      {/* Customer Feedback Section */}
+      <section className="customer-feedback-section">
+        <div className="customer-feedback-container">
+          <div className="customer-feedback-left">
+            <h2>
+              <span>Khách Hàng </span>
+              <span className="feedback-highlight">Đánh Giá</span>
+            </h2>
+            <div className="customer-feedback-swiper">
+              <div className="swiper-wrapper">
+                {/* Slide 1 */}
+                <div className="swiper-slide">
+                  <p className="customer-feedback-text">
+                    Gần đây tôi đã ăn ở đây. Chất lượng phục vụ phải gọi là hoàn hảo không có gì chê và nhân viên nhiệt tình. Tuy nhiên vì mặt bằng quận 1 nên giá trứng chiên hành là tận 140 000k nên hơi chát nhưng không sao chúng tôi thích !!!
+                  </p>
+                  <div className="customer-profile">
+                    <img src="/img/avatar.jpg" alt="Customer Avatar" className="customer-avatar" />
+                    <div>
+                      <span className="customer-name">Tayyab Sohail</span>
+                      <div className="customer-role">Khách vãng lai</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Slide 2 */}
+                <div className="swiper-slide">
+                  <p className="customer-feedback-text">
+                    Đồ ăn rất ngon, phục vụ nhanh chóng, nhân viên thân thiện. Sẽ quay lại lần sau!
+                  </p>
+                  <div className="customer-profile">
+                    <img src="/img/avatar.jpg" alt="Customer Avatar" className="customer-avatar" />
+                    <div>
+                      <span className="customer-name">Nguyễn Văn A</span>
+                      <div className="customer-role">Khách ruột</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Slide 3 */}
+                <div className="swiper-slide">
+                  <p className="customer-feedback-text">
+                    Không gian đẹp, món ăn đa dạng, giá cả hợp lý. Rất hài lòng với trải nghiệm tại đây.
+                  </p>
+                  <div className="customer-profile">
+                    <img src="/img/avatar.jpg" alt="Customer Avatar" className="customer-avatar" />
+                    <div>
+                      <span className="customer-name">Trần Thị B</span>
+                      <div className="customer-role">Food Blogger</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Pagination & Navigation */}
+              <div className="swiper-pagination"></div>
+              <div className="swiper-button-prev"></div>
+              <div className="swiper-button-next"></div>
+            </div>
+          </div>
+          <div className="customer-feedback-right">
+            <div className="chef-bg-shape"></div>
+            <img src="/img/chef.png" alt="Chef" className="chef-img" />
+          </div>
+        </div>
+      </section>
+      {/* About Us Section */}
+      <section className="about-us-section" id="about">
+      <div className="about-us-container">
+        <div className="about-us-title">Về chúng tôi</div>
+        <div className="about-us-grid">
+          <div className="about-us-card">
+            <div className="about-us-img">
+              <img src="../../public/img/food.jpg" alt="food" />
+            </div>
+            <div className="about-us-card-title">Câu chuyện doanh nghiệp</div>
+            <div className="about-us-card-name">Anna Lê</div>
+            <a href="/aboutus/1" className="about-us-arrow">→</a>
+          </div>
+    
+          <div className="about-us-card">
+            <div className="about-us-img">
+              <img src="../../public/img/ingredients.jpg" alt="ingredients" />
+            </div>
+            <div className="about-us-card-title">Câu chuyện nguyên liệu</div>
+            <div className="about-us-card-name">Do Anh Khoa </div>
+            <a href="/aboutus/2" className="about-us-arrow">→</a>
+          </div>
+        </div>
+      </div>
+    </section>
     </section>
   );
 }
