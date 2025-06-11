@@ -247,14 +247,91 @@ button.hidden:hover {
   border-color: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .container {
-    width: 98vw;
-    min-height: 520px;
-    border-radius: 18px;
-    padding: 0 0.5rem;
+    width: 90vw;
+    min-height: 600px;
   }
+
+  .form-container {
+    width: 100%;
+  }
+
+  .sign-in,
+  .sign-up {
+    width: 100%;
+  }
+
+  .container.active .sign-in {
+    transform: translateX(100%);
+  }
+
+  .container.active .sign-up {
+    transform: translateX(100%);
+  }
+
+  .toggle-container {
+    display: none;
+  }
+
+  .container.active .toggle-container {
+    display: none;
+  }
+
+  .toggle {
+    display: none;
+  }
+
+  .container.active .toggle {
+    display: none;
+  }
+
+  .toggle-panel {
+    display: none;
+  }
+
+  .container.active .toggle-panel {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95vw;
+    min-height: 520px;
+    margin: 2rem auto;
+  }
+
   .container form {
-    padding: 0 10px;
+    padding: 0 20px;
+  }
+
+  .container input {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .container button {
+    padding: 8px 35px;
+    font-size: 13px;
+  }
+
+  .social-icons a {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+  }
+
+  .container p {
+    font-size: 12px;
+    margin: 15px;
+  }
+
+  .container span {
+    font-size: 11px;
+  }
+
+  .container a {
+    font-size: 12px;
   }
 } 
