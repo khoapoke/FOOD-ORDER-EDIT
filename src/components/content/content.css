@@ -33,8 +33,11 @@ section {
   max-width: 120rem;
   margin: 0 auto 4.5rem;
 }
+/* để css các dot thì chỉ cần gọi 
+.slide-wrapper .swiper-pagination-bullet, 
+không cần tạo thêm thẻ div gì ở bên html nữa vì swiper đã hỗ trợ*/
 .slide-wrapper .swiper-pagination-bullet {
-  background-color: var(--text-color);
+  background-color: var(--text-color); /*màu trắng*/
   width: 1.5rem;
   height: 1.5rem;
 }
@@ -227,13 +230,20 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
+  max-width: 120rem;
   width: 100%;
   gap: 3rem;
 }
 .customer-feedback-left {
+  width: 100%;
   flex: 1;
   padding: 2rem 2rem 2rem 0;
+}
+
+.customer-feedback-swiper {
+  overflow: hidden;
+  width: 100%;
+  max-width: 120rem;
 }
 .customer-feedback-left h2 {
   font-size: 2.8rem;
@@ -318,7 +328,7 @@ section {
 .about-us-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   position: relative;
   transition: transform 0.3s ease;
@@ -369,41 +379,11 @@ section {
   justify-content: center;
   text-decoration: none;
   font-size: 1.3rem;
-  box-shadow: 0 2px 10px rgba(255,77,41,0.2);
+  box-shadow: 0 2px 10px rgba(255, 77, 41, 0.2);
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .about-us-arrow:hover {
   background: #ffa500;
   transform: scale(1.1);
-}
-@media (max-width: 900px) {
-  .customer-feedback-container {
-    flex-direction: column;
-    gap: 2rem;
-  }
-  .customer-feedback-right {
-    min-width: 0;
-  }
-  .chef-bg-shape, .chef-img {
-    width: 220px;
-    height: auto;
-  }
-  .about-us-grid {
-    position: static;
-  }
-  .about-us-arrow {
-    width: 32px;
-    height: 32px;
-    font-size: 1.3rem;
-    left: 85% !important;
-    top: auto !important;
-    bottom: 10px;
-    right: 10px;
-    position: static;
-    margin: 0.5rem 0 0 0.5rem;
-  }
-  .about-us-card-large .about-us-img {
-    height: 180px;
-  }
 }

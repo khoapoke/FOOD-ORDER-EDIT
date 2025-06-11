@@ -10,15 +10,7 @@ footer {
   padding-bottom: 1rem;
 }
 
-.footer-heading::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 50px;
-  height: 2px;
-  background: #ffc404;
-}
+
 
 .footer-text {
   color: #a4a4a4;

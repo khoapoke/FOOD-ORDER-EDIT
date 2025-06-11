@@ -12,19 +12,22 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={
-          <>
-            <Header />
-            <Content />
-            <Footer />
-          </>
-        } />
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Content />
+              <Footer />
+            </>
+          }
+        />
 
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/aboutus/1" element={<AboutUs1/>}/>
-        <Route path="/aboutus/2" element={<AboutUs2/>}/>
+        <Route path="/aboutus/1" element={<AboutUs1 />} />
+        <Route path="/aboutus/2" element={<AboutUs2 />} />
       </Routes>
     </Router>
   );

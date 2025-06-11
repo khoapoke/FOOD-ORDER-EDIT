@@ -50,7 +50,7 @@ function Footer() {
         </div>
 
         <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
-          <h5 className="footer-heading">Tìm kiếm</h5>
+          <h5 className="footer-heading ">Tìm kiếm</h5>
 
           <div className="form-outline form-white mb-4">
             <input
