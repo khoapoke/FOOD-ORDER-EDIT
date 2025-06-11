@@ -280,22 +280,7 @@ không cần tạo thêm thẻ div gì ở bên html nữa vì swiper đã hỗ 
   font-size: 0.95rem;
   color: #888;
 }
-.feedback-dots {
-  margin-top: 1rem;
-}
-.feedback-dots .dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ff4d29;
-  opacity: 0.3;
-  margin: 0 4px;
-  transition: opacity 0.2s;
-}
-.feedback-dots .dot.active {
-  opacity: 1;
-}
+/* không cần dot */
 
 /* About Us Section */
 .about-us-section {
