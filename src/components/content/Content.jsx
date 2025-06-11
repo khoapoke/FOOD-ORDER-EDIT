@@ -259,10 +259,6 @@ function Content() {
               </div>
             </div>
           </div>
-          <div className="customer-feedback-right">
-            <div className="chef-bg-shape"></div>
-            <img src="/img/chef.png" alt="Chef" className="chef-img" />
-          </div>
         </div>
       </div>
       {/* About Us */}

@@ -10,8 +10,6 @@ footer {
   padding-bottom: 1rem;
 }
 
-
-
 .footer-text {
   color: #a4a4a4;
   line-height: 1.8;
@@ -128,4 +126,86 @@ td:hover{
 
 .copyright a:hover {
   color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  footer {
+    font-size: 1.4rem;
+  }
+
+  .footer-heading {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+  }
+
+  .circle-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .circle-icon > i {
+    font-size: 1.4rem;
+  }
+
+  .search-input {
+    padding: 0.8rem 1.6rem !important;
+    font-size: 1.4rem;
+  }
+
+  .contact-item {
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-icon {
+    font-size: 1.6rem;
+  }
+
+  .hours-table td {
+    padding: 0.8rem !important;
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    font-size: 1.2rem;
+  }
+
+  .footer-heading {
+    font-size: 1.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .circle-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 3px;
+  }
+
+  .circle-icon > i {
+    font-size: 1.2rem;
+  }
+
+  .search-input {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 1.2rem;
+  }
+
+  .contact-item {
+    margin-bottom: 1rem;
+  }
+
+  .contact-icon {
+    font-size: 1.4rem;
+  }
+
+  .hours-table td {
+    padding: 0.6rem !important;
+    font-size: 1.2rem;
+  }
+
+  .copyright {
+    font-size: 1.1rem;
+    padding: 1rem 0;
+  }
 }
