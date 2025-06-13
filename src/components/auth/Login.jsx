@@ -165,10 +165,36 @@ export default function Login() {
               </a>
             </div>
             <span className="text-muted">Sử dụng gmail để đăng nhập</span>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Mật khẩu" />
+            <input
+              type="email"
+              placeholder="Email"
+              value={loginData.email}
+              onChange={(e) =>
+                setLoginData({ ...loginData, email: e.target.value })
+              }
+            />
+            {loginErrors.email && (
+              <span className="errors-text" style={{ color: "red" }}>
+                {loginErrors.email}
+              </span>
+            )}
+            <input
+              type="password"
+              placeholder="Mật khẩu"
+              value={loginData.password}
+              onChange={(e) =>
+                setLoginData({ ...loginData, password: e.target.value })
+              }
+            />
+            {loginErrors.password && (
+              <span className="errors-text" style={{ color: "red" }}>
+                {loginErrors.password}
+              </span>
+            )}
             <a href="#">Quên mật khẩu?</a>
-            <button type="button">Đăng nhập</button>
+            <button type="button" onClick={handleLogin}>
+              Đăng nhập
+            </button>
           </form>
         </div>
 
