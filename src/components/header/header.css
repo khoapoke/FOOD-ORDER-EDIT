@@ -9,7 +9,7 @@ header {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-nav .header_list {
+#navbar_header-home .header_list {
   height: 11.2rem;
   display: flex;
   align-items: center;
@@ -17,11 +17,11 @@ nav .header_list {
   padding: 1.5rem 5rem;
   gap: 1.6rem;
 }
-nav .header_list > .home {
+#navbar_header-home .header_list > .home {
   margin-right: auto;
 }
 
-nav .header_list li a {
+#navbar_header-home .header_list li a {
   text-decoration: none;
   font-family: "Lato", sans-serif;
   font-size: 1.92rem;
@@ -30,7 +30,7 @@ nav .header_list li a {
   transition: all 0.3s ease;
 }
 
-nav .header_list li a > .title {
+#navbar_header-home .header_list li a > .title {
   display: flex;
   max-width: 100%;
   flex-wrap: nowrap;
@@ -41,7 +41,7 @@ nav .header_list li a > .title {
   transition: transform 0.3s ease;
 }
 
-nav .header_list .home .title img {
+#navbar_header-home .header_list .home .title img {
   width: 6.4rem;
   height: 6.4rem;
   object-fit: contain;
@@ -53,11 +53,11 @@ nav .header_list .home .title img {
   flex-shrink: 0;
 }
 
-nav .header_list .home .title:hover {
+#navbar_header-home .header_list .home .title:hover {
   transform: scale(1.02);
 }
 
-nav .header_list .home .title img:hover {
+#navbar_header-home .header_list .home .title img:hover {
   transform: rotate(5deg);
   box-shadow: 0 0 15px rgba(255, 196, 4, 0.5);
 }
@@ -76,19 +76,19 @@ nav .header_list .home .title img:hover {
 
 /* Text button (Sign In) */
 
-nav .header_list li a {
+#navbar_header-home .header_list li a {
   list-style: none;
   position: relative;
   overflow: hidden;
   text-transform: uppercase;
 }
-nav .header_list li .header_list-item {
+#navbar_header-home .header_list li .header_list-item {
   display: inline-block;
   transition: all 0.3s ease;
   margin: 3rem 10px;
 }
 
-nav .header_list li .header_list-item::after {
+#navbar_header-home .header_list li .header_list-item::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -100,23 +100,23 @@ nav .header_list li .header_list-item::after {
   transition: transform 0.3s ease;
 }
 
-nav .header_list li .header_list-item:hover,
-nav .header_list li .header_list-item:active {
+#navbar_header-home .header_list li .header_list-item:hover,
+#navbar_header-home .header_list li .header_list-item:active {
   color: var(--background-hover);
   transform: translateY(-2px);
 }
-nav .header_list li .header_list-item:hover::after {
+#navbar_header-home .header_list li .header_list-item:hover::after {
   transform: translateX(0);
 }
 
 /* Button (Cart) */
 
-header > nav > .button {
+header > #navbar_header-home > .button {
   position: relative;
   overflow: hidden;
 }
 
-header > nav > .button::before {
+header > #navbar_header-home > .button::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -129,12 +129,12 @@ header > nav > .button::before {
   transition: width 0.6s ease, height 0.6s ease;
 }
 
-header > nav > .button:hover::before {
+header > #navbar_header-home > .button:hover::before {
   width: 300%;
   height: 300%;
 }
 
-header > nav > .header_list > li > .button {
+header > #navbar_header-home > .header_list > li > .button {
   font-size: 1.92rem;
 
   cursor: pointer;
@@ -214,66 +214,40 @@ header > nav > .header_list > li > .button {
 /* Media Screen  */
 
 @media screen and (max-width: 960px) {
-  header {
-    height: 8rem;
+  #navbar_header-home {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    z-index: 10;
+    width: min(25rem, 100%);
+    border-left: 1px solid var(--background-hover);
+    background: var(--background);
+    transition: right 0.3s ease-out;
   }
 
-  nav .header_list {
-    height: 100%;
-    padding: 1rem;
+  #navbar_header-home.show {
+    right: 0;
+  }
+  .show ~ #overlay {
+    display: block;
+  }
+  #navbar_header-home > .header_list {
+    width: 100%;
+    flex-direction: column;
   }
 
-  nav .header_list li a {
-    font-size: 1.6rem;
-  }
-
-  nav .header_list .home .title img {
-    width: 4.8rem;
-    height: 4.8rem;
-  }
-
-  .title p {
-    font-size: 1.8rem;
-  }
-
-  nav .header_list li .header_list-item {
-    margin: 2rem 5px;
-  }
-
-  header > nav > .header_list > li > .button {
-    font-size: 1.6rem;
-    padding: 1rem 2rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  header {
-    height: 7rem;
-  }
-
-  nav .header_list li a {
-    font-size: 1.4rem;
-  }
-
-  nav .header_list .home .title img {
+  .title img {
     width: 4rem;
     height: 4rem;
   }
 
   .title p {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
   }
 
-  nav .header_list li .header_list-item {
-    margin: 1.5rem 3px;
-  }
-
-  header > nav > .header_list > li > .button {
-    font-size: 1.4rem;
-    padding: 0.8rem 1.6rem;
-  }
-
-  .open_sidebar-button {
-    margin-left: 85%;
+  .open_sidebar-button,
+  .close_sidebar-button {
+    display: block;
   }
 }

@@ -13,18 +13,16 @@ function Header() {
 
   return (
     <header id="main-header">
-      {/* nút sidebar đã ẩn */}
       <button className="open_sidebar-button" onClick={openSidebar}>
         <img src="/img/Menu_bar.png" alt="" height="40px" width="40px" />
       </button>
-      {/* kết thúc nút sidebar ẩn */}
-      <nav id="navbar" className={isOpen ? "show" : ""}>
+      <nav id="navbar_header-home" className={isOpen ? "show" : ""}>
         <button className="close_sidebar-button" onClick={closeSidebar}>
           <img src="/img/close.png" alt="" height="40px" width="40px" />
         </button>
         <ul className="header_list">
           <li className="home">
-            <a href="/">
+            <a href="#">
               <div className="title">
                 <img src="/img/logo.jpg" />
                 <p>Restaurant</p>
@@ -37,7 +35,7 @@ function Header() {
             </a>
           </li>
           <li>
-            <a className="header_list-item" href="#about">
+            <a className="header_list-item" href="/about">
               About Us
             </a>
           </li>
@@ -52,9 +50,7 @@ function Header() {
           </li>
         </ul>
       </nav>
-      {/* kết thúc danh sách navbar */}
       <div id="overlay"></div>
-      {/* kết thúc tấm màn */}
     </header>
   );
 }
