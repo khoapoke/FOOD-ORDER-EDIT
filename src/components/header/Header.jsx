@@ -34,10 +34,28 @@ function Header() {
               Meals
             </a>
           </li>
-          <li>
-            <a className="header_list-item" href="/aboutus/1">
+          <li className="dropdown mb-2">
+            <a
+              className="dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              href="/menu"
+            >
               About Us
             </a>
+            <ul class="dropdown-menu bg-dark">
+              <li>
+                <a class="dropdown-item my-3" href="/aboutus/1">
+                  bussiness story
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item my-3" href="/aboutus/2">
+                  About us story
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li>
