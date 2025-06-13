@@ -1,35 +1,52 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/header/Header.jsx";
-import Footer from "./components/footer/Footer.jsx";
-import Content from "./components/content/Content.jsx";
-import AdminPage from "./components/admin/AdminPage.jsx";
-import AboutUs1 from "./aboutus/AboutUs1.jsx";
-import AboutUs2 from "./aboutus/AboutUs2.jsx";
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "./Layout/MainLayout.jsx";
+import AuthLayout from "./Layout/AuthLayout.jsx";
 import Menu from "./menu/Menu.jsx";
-import Login from "./components/auth/Login.jsx";
+import AdminPage from "./Components/admin/AdminPage.jsx";
+import AdminSidebar from "./Components/admin/AdminSideBar.jsx";
+import LoginPage from "./Components/auth/Login.jsx";
+import Content from "./Components/content/Content.jsx";
 
 function App() {
   return (
-    <Router>
+    <>
       <Routes>
         <Route
           path="/"
           element={
-            <>
-              <Header />
+            <MainLayout>
               <Content />
-              <Footer />
-            </>
+            </MainLayout>
           }
         />
-
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/aboutus/1" element={<AboutUs1 />} />
-        <Route path="/aboutus/2" element={<AboutUs2 />} />
+        <Route
+          path="/menu"
+          element={
+            <MainLayout>
+              <Menu />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <AuthLayout>
+              <LoginPage />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AuthLayout>
+              <AdminSidebar>
+                <AdminPage />
+              </AdminSidebar>
+            </AuthLayout>
+          }
+        />
       </Routes>
-    </Router>
+    </>
   );
 }
 
