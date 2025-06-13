@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useFetch } from "../../hooks/useFetch";
+import { fetchAvailableMeals } from "../../util/http";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 
@@ -12,8 +14,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./content.css";
-import { useFetch } from "../../hooks/useFetch";
-import { fetchAvailableMeals } from "../../util/http";
 
 function Content() {
   const { data: meals, isLoading, error } = useFetch(fetchAvailableMeals, []);
@@ -23,12 +23,14 @@ function Content() {
       grabCursor: true,
       spaceBetween: 20,
 
+      // If we need pagination
       pagination: {
-        el: ".swiper-pagination",
+        el: " .swiper-pagination",
         clickable: true,
         dynamicBullets: true,
       },
 
+      // Navigation arrows
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
@@ -45,23 +47,13 @@ function Content() {
         },
       },
     });
-    // Swiper cho phần đánh giá khách hàng
     new SwiperCore(".customer-feedback-swiper", {
       loop: true,
       grabCursor: true,
-      spaceBetween: 20,
-      pagination: {
-        el: ".customer-feedback-swiper .swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
-      },
-      navigation: {
-        nextEl: ".customer-feedback-swiper .swiper-button-next",
-        prevEl: ".customer-feedback-swiper .swiper-button-prev",
-      },
+
       slidesPerView: 1,
     });
-  }, [meals]); // Reinitialize Swiper when meals change
+  }, [meals]);
 
   return (
     <section className="container-fluid">
@@ -70,7 +62,6 @@ function Content() {
         className="carousel slide"
         data-bs-ride="carousel"
       >
-        {/* bắt đầu dot slideshow */}
         <div className="carousel-indicators">
           <button
             type="button"
@@ -87,14 +78,13 @@ function Content() {
             aria-label="Slide 2"
           ></button>
         </div>
-        {/* kết thúc dot slideshow */}
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img src="/img/Home1_1920x960.png" className="d-block w-100" />
             <div className="overlay-dark"></div>
             <div className="text-caption">
-              <h1>NHÀ HÀNG</h1>
-              <h1>THỨC ĂN NGON</h1>
+              <h1>RESTAURANT</h1>
+              <h1>DELICIOUS FOOD</h1>
             </div>
           </div>
           <div className="carousel-item">
@@ -106,7 +96,6 @@ function Content() {
             </div>
           </div>
         </div>
-        {/* kết thúc ảnh và mô tả trong slideshow */}
         <button
           className="carousel-control-prev"
           type="button"
@@ -119,7 +108,6 @@ function Content() {
           ></span>
           <span className="visually-hidden">Previous</span>
         </button>
-        {/* kết thúc nút điều hướng trước */}
         <button
           className="carousel-control-next"
           type="button"
@@ -132,24 +120,31 @@ function Content() {
           ></span>
           <span className="visually-hidden">Next</span>
         </button>
-        {/* kết thúc nút điều hướng tiếp theo */}
       </div>
-      {/*  Mỗi dòng là các thông tin về trang */}
+
       <div className="row">
         <h1
           className="text-uppercase text-center"
           style={{ margin: "6rem 0", color: "#d9e2f1" }}
         >
-          {/* kiểu món ăn như: pháp,mỹ,anh,... test thử vùng slide-wrapper ở dưới với các card */}
-          món ăn
+          danh mục nổi bật
         </h1>
+        {isLoading && (
+          <h1 className="text-uppercase text-center" style={{ color: "green" }}>
+            Loading......
+          </h1>
+        )}
+        {error && (
+          <h1 className="text-uppercase text-center" style={{ color: "red" }}>
+            {error}
+          </h1>
+        )}
         <div className="swiper">
           <div className="slide-wrapper">
             <div id="meals" className="swiper-wrapper">
-              {isLoading && <p>Loading meals...</p>}
-              {error && <p>Error: {error}</p>}
               {!isLoading &&
                 !error &&
+                Array.isArray(meals) &&
                 meals.map((meal) => (
                   <div key={meal.id} className="meal-item swiper-slide">
                     <article>
@@ -170,38 +165,128 @@ function Content() {
                     </article>
                   </div>
                 ))}
+              {/* <div className="meal-item swiper-slide">
+                <article>
+                  <img alt="Ma Cheese" src="/img/seafood-paella.jpg" />
+                  <div>
+                    <h3>Mac Cheese</h3>
+                    <p className="meal-item-price">$8.99</p>
+                    <p className="meal-item-description">
+                      Creamy cheddar cheese mixed with perfectly cooked
+                      macaroni, topped with crispy breadcrumbs. A classNameic
+                      comfort food.
+                    </p>
+                  </div>
+                  <p className="meal-item-actions">
+                    <button className="button">Add to Cart</button>
+                  </p>
+                </article>
+              </div>
+              <div className="meal-item swiper-slide">
+                <article>
+                  <img alt="Ma Cheese" src="/img/spaghetti-carbonara.jpg" />
+                  <div>
+                    <h3>Mac Cheese</h3>
+                    <p className="meal-item-price">$8.99</p>
+                    <p className="meal-item-description">
+                      Creamy cheddar cheese mixed with perfectly cooked
+                      macaroni, topped with crispy breadcrumbs. A classNameic
+                      comfort food.
+                    </p>
+                  </div>
+                  <p className="meal-item-actions">
+                    <button className="button">Add to Cart</button>
+                  </p>
+                </article>
+              </div>
+              <div className="meal-item swiper-slide">
+                <article>
+                  <img alt="Ma Cheese" src="/img/vegan-buddha-bowl.jpg" />
+                  <div>
+                    <h3>Mac Cheese</h3>
+                    <p className="meal-item-price">$8.99</p>
+                    <p className="meal-item-description">
+                      Creamy cheddar cheese mixed with perfectly cooked
+                      macaroni, topped with crispy breadcrumbs. A classNameic
+                      comfort food.
+                    </p>
+                  </div>
+                  <p className="meal-item-actions">
+                    <button className="button">Add to Cart</button>
+                  </p>
+                </article>
+              </div>
+              <div className="meal-item swiper-slide">
+                <article>
+                  <img alt="Ma Cheese" src="/img/sushi-roll-platter.jpg" />
+                  <div>
+                    <h3>Mac Cheese</h3>
+                    <p className="meal-item-price">$8.99</p>
+                    <p className="meal-item-description">
+                      Creamy cheddar cheese mixed with perfectly cooked
+                      macaroni, topped with crispy breadcrumbs. A classNameic
+                      comfort food.
+                    </p>
+                  </div>
+                  <p className="meal-item-actions">
+                    <button className="button">Add to Cart</button>
+                  </p>
+                </article>
+              </div>
+              <div className="meal-item swiper-slide">
+                <article>
+                  <img alt="Ma Cheese" src="/img/veggie-burger.jpg" />
+                  <div>
+                    <h3>Mac Cheese</h3>
+                    <p className="meal-item-price">$8.99</p>
+                    <p className="meal-item-description">
+                      Creamy cheddar cheese mixed with perfectly cooked
+                      macaroni, topped with crispy breadcrumbs. A classNameic
+                      comfort food.
+                    </p>
+                  </div>
+                  <p className="meal-item-actions">
+                    <button className="button">Add to Cart</button>
+                  </p>
+                </article>
+              </div> */}
             </div>
 
-            <div className="swiper-pagination"></div>
+            <div className="swiper-pagination-customer"></div>
 
             <div className="swiper-button-prev slide-swiper-button"></div>
             <div className="swiper-button-next slide-swiper-button"></div>
           </div>
         </div>
       </div>
-      {/* dòng chứa thực đơn hôm nay
-      <div className="row">
+
+      {/*<div className="row">
         <h1
           className="text-uppercase text-center"
           style={{ margin: "6rem 0", color: "#d9e2f1" }}
         >
-          thực đơn hôm nay
+          sản phẩm của chúng tôi
         </h1>
-      </div> */}
+      </div>*/}
 
-      {/* thêm các dòng bố sung,..... */}
-      {/* Customer Feedback sử dụng row trong bootstrap và thay đổi thẻ đivđể hợp logic */}
-      <div className="row customer-feedback-section">
+      <div className="row customer-feedback">
         <div className="customer-feedback-container">
-          <div className="customer-feedback-left">
-            <h2>
-              <span>Khách Hàng </span>
-              <span className="feedback-highlight">Đánh Giá</span>
-            </h2>
-            <div className="customer-feedback-swiper">
-              <div className="swiper-wrapper">
-                {/* Slide 1 */}
-                <div className="swiper-slide">
+          <h2>
+            <span style={{ color: "#fff" }}>Khách Hàng </span>
+            <span className="feedback-highlight">Đánh Giá</span>
+          </h2>
+          <div className="customer-feedback-swiper">
+            <div className="swiper-wrapper">
+              {/* Slide 1 */}
+              <div className="swiper-slide">
+                <div className="review-card">
+                  <div className="rating">
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star empty">★</span>
+                  </div>
                   <p className="customer-feedback-text">
                     Gần đây tôi đã ăn ở đây. Chất lượng phục vụ phải gọi là hoàn
                     hảo không có gì chê và nhân viên nhiệt tình. Tuy nhiên vì
@@ -220,11 +305,21 @@ function Content() {
                     </div>
                   </div>
                 </div>
-                {/* Slide 2 */}
-                <div className="swiper-slide">
+              </div>
+              {/* Slide 2 */}
+              <div className="swiper-slide">
+                <div className="review-card">
+                  <div className="rating">
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+
+                    <span className="star">★</span>
+                  </div>
                   <p className="customer-feedback-text">
-                    Đồ ăn rất ngon, phục vụ nhanh chóng, nhân viên thân thiện.
-                    Sẽ quay lại lần sau!
+                    Không gian đẹp, món ăn đa dạng, giá cả hợp lý. Rất hài lòng
+                    với trải nghiệm tại đây.
                   </p>
                   <div className="customer-profile">
                     <img
@@ -238,11 +333,20 @@ function Content() {
                     </div>
                   </div>
                 </div>
-                {/* Slide 3 */}
-                <div className="swiper-slide">
+              </div>
+              {/* Slide 3 */}
+              <div className="swiper-slide">
+                <div className="review-card">
+                  <div className="rating">
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                  </div>
                   <p className="customer-feedback-text">
-                    Không gian đẹp, món ăn đa dạng, giá cả hợp lý. Rất hài lòng
-                    với trải nghiệm tại đây.
+                    Đồ ăn rất ngon, phục vụ nhanh chóng, nhân viên thân thiện.
+                    sẽ quay lại lần sau!
                   </p>
                   <div className="customer-profile">
                     <img
@@ -251,8 +355,8 @@ function Content() {
                       className="customer-avatar"
                     />
                     <div>
-                      <span className="customer-name">Trần Thị B</span>
-                      <div className="customer-role">Food Blogger</div>
+                      <span className="customer-name">Lê thị bưởi</span>
+                      <div className="customer-role">Food blogger</div>
                     </div>
                   </div>
                 </div>
@@ -261,7 +365,7 @@ function Content() {
           </div>
         </div>
       </div>
-      {/* About Us */}
+      {/* About Us Section */}
       <div className="row about-us-section" id="about">
         <div className="about-us-container">
           <div className="about-us-title">Về chúng tôi</div>
