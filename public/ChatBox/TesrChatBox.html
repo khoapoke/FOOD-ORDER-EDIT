@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rasa Chatbot</title>
+    <style>
+      .chatbox-RASA {
+        width: 400px;
+        height: 300px;
+        max-height: 600px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chatbox-RASA h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        color: #4a90e2;
+      }
+
+      #chatbox {
+        flex: 1;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #f9f9f9;
+      }
+
+      #chatbox p {
+        margin: 8px 0;
+        padding: 6px 10px;
+        border-radius: 10px;
+        max-width: 85%;
+        word-wrap: break-word;
+      }
+
+      #chatbox p strong {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      #chatbox p:nth-child(odd) {
+        background: #e1f5fe;
+        align-self: flex-start;
+      }
+
+      #chatbox p:nth-child(even) {
+        background: #dcedc8;
+        align-self: flex-end;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        width: calc(100% - 22px);
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        background: #4a90e2;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: #357ab8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chatbox-RASA">
+      <h2>Rasa Chatbot</h2>
+      <div id="chatbox"></div>
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Type your message here..."
+      />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+      async function sendMessage() {
+        const userInput = document.getElementById("userInput").value;
+        if (!userInput.trim()) return;
+
+        // Hiển thị tin nhắn người dùng
+        const chatbox = document.getElementById("chatbox");
+        chatbox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+
+        // Gửi tin nhắn đến Rasa
+        const response = await fetch(
+          "http://localhost:5005/webhooks/rest/webhook",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sender: "user", message: userInput }),
+          },
+        );
+
+        const data = await response.json();
+
+        // Hiển thị phản hồi của bot
+        if (data.length === 0) {
+          chatbox.innerHTML += `<p><strong>Bot:</strong> (no response)</p>`;
+        } else {
+          data.forEach((entry) => {
+            chatbox.innerHTML += `<p><strong>Bot:</strong> ${entry.text}</p>`;
+          });
+        }
+
+        document.getElementById("userInput").value = "";
+      }
+    </script>
+  </body>
+</html>
