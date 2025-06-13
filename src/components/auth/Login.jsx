@@ -3,6 +3,78 @@ import "./Login.css";
 
 export default function Login() {
   const [isActive, setIsActive] = useState(false);
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [loginErrors, setLoginErrors] = useState({
+    email: "",
+    password: "",
+  });
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
+
+  const handleRegister = () => {
+    const newErrors = { email: "", password: "", confirmPassword: "" };
+
+    if (registerData.email.trim() === "") {
+      newErrors.email = "Vui lòng nhập email";
+    } else if (!emailRegex.test(registerData.email)) {
+      newErrors.email = "Email không hợp lệ";
+    }
+    if (registerData.password.trim() === "") {
+      newErrors.password = "Vui lòng nhập mật khẩu";
+    } else if (!passwordRegex.test(registerData.password)) {
+      newErrors.password = "Mật khẩu phải ít nhất 6 ký tự và có 1 chữ in hoa";
+    }
+
+    if (registerData.confirmPassword.trim() === "") {
+      newErrors.confirmPassword = "Vui lòng xác nhận mật khẩu";
+    } else if (registerData.password !== registerData.confirmPassword) {
+      newErrors.confirmPassword = "Mật khẩu xác nhận không khớp";
+    }
+
+    setErrors(newErrors);
+
+    const isValid = Object.values(newErrors).every((e) => e === "");
+    if (isValid) {
+      alert("Đăng ký thành công");
+      // Gửi dữ liệu lên server ở đây............
+    }
+  };
+  const handleLogin = () => {
+    const newErrors = { email: "", password: "" };
+
+    if (loginData.email.trim() === "") {
+      newErrors.email = "vui lòng nhập đẩy đủ thông tin";
+    } else if (!emailRegex.test(loginData.email)) {
+      newErrors.email = "Email không hợp lệ";
+    }
+
+    if (loginData.password.trim() === "") {
+      newErrors.password = "Mật khẩu không được để trống";
+    }
+
+    setLoginErrors(newErrors);
+
+    const isValid = Object.values(newErrors).every((e) => e === "");
+    if (isValid) {
+      alert("Đăng nhập thành công");
+      // Thực hiện xử lý tiếp theo ở đây
+    }
+  };
 
   return (
     <>
@@ -26,10 +98,51 @@ export default function Login() {
               </a>
             </div>
             <span className="text-muted">Sử dụng gmail để đăng ký</span>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Mật khẩu" />
-            <input type="password" placeholder="Xác nhận mật khẩu" />
-            <button type="button">Đăng ký</button>
+            <input
+              type="email"
+              placeholder="Email"
+              value={registerData.email}
+              onChange={(e) =>
+                setRegisterData({ ...registerData, email: e.target.value })
+              }
+            />
+            {errors.email && (
+              <span className="errors-text" style={{ color: "red" }}>
+                {errors.email}
+              </span>
+            )}
+            <input
+              type="password"
+              placeholder="Mật khẩu"
+              value={registerData.password}
+              onChange={(e) =>
+                setRegisterData({ ...registerData, password: e.target.value })
+              }
+            />
+            {errors.password && (
+              <span className="errors-text" style={{ color: "red" }}>
+                {errors.password}
+              </span>
+            )}
+            <input
+              type="password"
+              placeholder="Xác nhận mật khẩu"
+              value={registerData.confirmPassword}
+              onChange={(e) =>
+                setRegisterData({
+                  ...registerData,
+                  confirmPassword: e.target.value,
+                })
+              }
+            />
+            {errors.confirmPassword && (
+              <span className="errors-text" style={{ color: "red" }}>
+                {errors.confirmPassword}
+              </span>
+            )}
+            <button type="button" onClick={handleRegister}>
+              Đăng ký
+            </button>
           </form>
         </div>
 
