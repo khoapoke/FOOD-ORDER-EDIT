@@ -1,6 +1,6 @@
 .admin-container {
   min-height: 100vh;
-  background: var(--background-content);
+
   padding: 2rem;
   color: var(--text-color);
 }
@@ -11,11 +11,11 @@
   align-items: center;
   margin-bottom: 3rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--text-color);
+  border-bottom: 2px solid var(--text-color-admin);
 }
 
 .admin-header h1 {
-  color: var(--text-color);
+  color: var(--text-color-admin);
   font-size: 3.2rem;
   margin: 0;
 }
@@ -138,40 +138,26 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.button {
-  font-size: 1.6rem;
-  cursor: pointer;
-  background-color: var(--text-home);
-  border: 1px solid var(--text-home);
-  color: var(--text-card);
-  padding: 1rem 2rem;
-  border-radius: 0.8rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.button:hover {
-  background-color: #ffab04;
-  transform: translateY(-2px);
-}
-
-.button-secondary {
+.button.button-secondary {
   background-color: transparent;
   border-color: var(--text-home);
   color: var(--text-home);
 }
 
-.button-secondary:hover {
+.button.button-secondary:hover {
   background-color: rgba(255, 196, 4, 0.1);
+  color: #fff;
 }
 
-.button-danger {
+.button.button-danger {
   background-color: #dc3545;
   border-color: #dc3545;
 }
 
-.button-danger:hover {
+.button.button-danger:hover {
   background-color: #c82333;
+  border-color: #c82333;
+  color: #fff;
 }
 
 .admin-loading,
@@ -283,4 +269,4 @@
   .meal-actions .button {
     width: 100%;
   }
-} 
+}

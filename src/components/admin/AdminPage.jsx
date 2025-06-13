@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./admin.css";
 
 function AdminPage() {
@@ -13,7 +14,7 @@ function AdminPage() {
     name: "",
     price: "",
     description: "",
-    image: null
+    image: null,
   });
 
   useEffect(() => {
@@ -35,33 +36,33 @@ function AdminPage() {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: files ? files[0] : value
+      [name]: files ? files[0] : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
-    Object.keys(formData).forEach(key => {
+    Object.keys(formData).forEach((key) => {
       formDataToSend.append(key, formData[key]);
     });
 
     try {
-      const url = editingMeal 
+      const url = editingMeal
         ? `http://localhost:3000/meals/${editingMeal.id}`
         : "http://localhost:3000/meals";
-      
+
       const method = editingMeal ? "PUT" : "POST";
-      
+
       const response = await fetch(url, {
         method,
-        body: formDataToSend
+        body: formDataToSend,
       });
 
       if (!response.ok) throw new Error("Failed to save meal");
-      
+
       await fetchMeals();
       resetForm();
     } catch (err) {
@@ -75,20 +76,20 @@ function AdminPage() {
       name: meal.name,
       price: meal.price,
       description: meal.description,
-      image: null
+      image: null,
     });
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this meal?")) return;
-    
+
     try {
       const response = await fetch(`http://localhost:3000/meals/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
       });
-      
+
       if (!response.ok) throw new Error("Failed to delete meal");
-      
+
       await fetchMeals();
     } catch (err) {
       setError(err.message);
@@ -100,7 +101,7 @@ function AdminPage() {
       name: "",
       price: "",
       description: "",
-      image: null
+      image: null,
     });
     setEditingMeal(null);
   };
@@ -173,7 +174,11 @@ function AdminPage() {
                 {editingMeal ? "Update Meal" : "Add Meal"}
               </button>
               {editingMeal && (
-                <button type="button" className="button button-secondary" onClick={resetForm}>
+                <button
+                  type="button"
+                  className="button button-secondary"
+                  onClick={resetForm}
+                >
                   Cancel Edit
                 </button>
               )}
@@ -184,9 +189,12 @@ function AdminPage() {
         <div className="admin-meals">
           <h2>Current Meals</h2>
           <div className="meals-grid">
-            {meals.map(meal => (
+            {meals.map((meal) => (
               <div key={meal.id} className="meal-card">
-                <img src={`http://localhost:3000/${meal.image}`} alt={meal.name} />
+                <img
+                  src={`http://localhost:3000/${meal.image}`}
+                  alt={meal.name}
+                />
                 <div className="meal-info">
                   <h3>{meal.name}</h3>
                   <p className="price">${meal.price}</p>
@@ -196,7 +204,10 @@ function AdminPage() {
                   <button className="button" onClick={() => handleEdit(meal)}>
                     Edit
                   </button>
-                  <button className="button button-danger" onClick={() => handleDelete(meal.id)}>
+                  <button
+                    className="button button-danger"
+                    onClick={() => handleDelete(meal.id)}
+                  >
                     Delete
                   </button>
                 </div>
@@ -209,4 +220,4 @@ function AdminPage() {
   );
 }
 
-export default AdminPage; 
+export default AdminPage;
