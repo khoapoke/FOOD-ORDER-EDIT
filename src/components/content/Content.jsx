@@ -372,7 +372,7 @@ function Content() {
           <div className="about-us-grid">
             <div className="about-us-card">
               <div className="about-us-img">
-                <img src="../../public/img/food.jpg" alt="food" />
+                <img src="/img/food.jpg" alt="food" />
               </div>
               <div className="about-us-card-title">Câu chuyện doanh nghiệp</div>
               <div className="about-us-card-name">Anna Lê</div>
@@ -383,7 +383,7 @@ function Content() {
 
             <div className="about-us-card">
               <div className="about-us-img">
-                <img src="../../public/img/ingredients.jpg" alt="ingredients" />
+                <img src="/img/ingredients.jpg" alt="ingredients" />
               </div>
               <div className="about-us-card-title">Câu chuyện nguyên liệu</div>
               <div className="about-us-card-name">Do Anh Khoa </div>
