@@ -6,6 +6,8 @@ import AdminPage from "./components/admin/AdminPage.jsx";
 import AdminSidebar from "./Components/admin/AdminSideBar.jsx";
 import LoginPage from "./Components/auth/Login.jsx";
 import Content from "./Components/content/Content.jsx";
+import AboutUs1 from "./components/aboutus/AboutUs1.jsx";
+import AboutUs2 from "./components/aboutus/AboutUs2.jsx";
 
 function App() {
   return (
@@ -43,6 +45,22 @@ function App() {
                 <AdminPage />
               </AdminSidebar>
             </AuthLayout>
+          }
+        />
+        <Route
+          path="/aboutus/1"
+          element={
+            <MainLayout>
+              <AboutUs1/>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/aboutus/2"
+          element={
+            <MainLayout>
+              <AboutUs2/>
+            </MainLayout>
           }
         />
       </Routes>
