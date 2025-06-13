@@ -25,7 +25,8 @@ export default function Login() {
   });
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
-
+  const emailAdmin = "admin123@gmail.com";
+  const passwordAdmin = "1234Ngay";
   const handleRegister = () => {
     const newErrors = { email: "", password: "", confirmPassword: "" };
 
@@ -50,7 +51,29 @@ export default function Login() {
 
     const isValid = Object.values(newErrors).every((e) => e === "");
     if (isValid) {
-      alert("Đăng ký thành công");
+      fetch("http://localhost:3000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "User", // bạn có thể thêm input tên nếu muốn
+          email: registerData.email,
+          password: registerData.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.message === "User registered successfully!") {
+            alert("Đăng ký thành công");
+            setIsActive(false); // chuyển qua trang đăng nhập
+          } else {
+            alert("Lỗi: " + data.message);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Có lỗi xảy ra khi đăng ký.");
+        });
+
       // Gửi dữ liệu lên server ở đây............
     }
   };
@@ -67,11 +90,40 @@ export default function Login() {
       newErrors.password = "Mật khẩu không được để trống";
     }
 
+    if (
+      loginData.email === emailAdmin &&
+      loginData.password === passwordAdmin
+    ) {
+      alert("Đăng nhập với tư cách admin");
+      window.location.href = "/admin";
+      return;
+    }
     setLoginErrors(newErrors);
 
     const isValid = Object.values(newErrors).every((e) => e === "");
     if (isValid) {
-      alert("Đăng nhập thành công");
+      fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: loginData.email,
+          password: loginData.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) {
+            alert("Đăng nhập thành công!");
+            localStorage.setItem("token", data.token); // Lưu token vào localStorage
+            window.location.href = "/users"; // Chuyển trang
+          } else {
+            alert("" + data.message);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Có lỗi xảy ra khi đăng nhập.");
+        });
       // Thực hiện xử lý tiếp theo ở đây
     }
   };
