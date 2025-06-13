@@ -10,5 +10,11 @@
     "name": "Khoa",
     "email": "OXplakhoa@gmail.com",
     "password": "$2b$10$uAs1bDlpMdHMx5PFhAAjCOi/y331haL1evQBmtmSbvsQOxQqXV7ve"
+  },
+  {
+    "id": "cad8f49f-5f17-4f9e-af57-fddf05d1da0f",
+    "name": "User",
+    "email": "abc123@gmail.com",
+    "password": "$2b$10$56RGpW3IU9NxTn6KcpBP9OujZdeI4NRsJc08xrCU0Ck7Sc.G75uJq"
   }
 ]
