@@ -309,16 +309,16 @@ section {
   justify-content: center;
 }
 .customer-feedback-container {
-  margin-top: 10rem;
-  background: var(--background-content2);
+  margin-top: 5rem;
+  background: var(--background-content);
   padding: 3rem 0;
-  padding-left: 5rem;
+  padding-left: 8rem;
 }
 
 .customer-feedback-container h2 {
   font-size: 2.8rem;
   font-weight: 700;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3.5rem;
 }
 
 .customer-feedback-swiper {
