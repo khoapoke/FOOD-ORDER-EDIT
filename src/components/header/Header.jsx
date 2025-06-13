@@ -35,7 +35,7 @@ function Header() {
             </a>
           </li>
           <li>
-            <a className="header_list-item" href="/about">
+            <a className="header_list-item" href="/aboutus/1">
               About Us
             </a>
           </li>
