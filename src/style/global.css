@@ -1,14 +1,25 @@
 /* Link font google montserrat */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
-
-/* biến dùng chung cho toàn bộ trang home */
 :root {
   --background: linear-gradient(to bottom, #29251cf2, #2c2306f2);
-  --background-content: linear-gradient(#29251c, #2c2306);
+  --background-content: linear-gradient(to right, #1a1a1a, #2d2d2d);
+  --background-content2: linear-gradient(to right, #2b2b2b, #3d3d3d);
   --text-color: #d9e2f1;
   --text-home: #ffc404;
   --text-card: #1f1a09;
   --background-hover: #ffab04;
+  
+   --body-color: #e4e9f7;
+  --primary-color: #695cfe;
+  --primary-color-light: #f6f5ff;
+  --sidebar-color: #fff;
+  --text-color-admin: #707070;
+  --toggle-color: #ddd;
+  /* time transition */
+  --tran-02: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.4s ease;
+  --tran-05: all 0.5s ease;
 }
 * {
   box-sizing: border-box;
