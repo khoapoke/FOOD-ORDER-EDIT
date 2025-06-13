@@ -1,10 +1,9 @@
-import Header from "../components/header/Header";
-import "../components/content/content.css";
+import "../Components/content/content.css";
 
 export default function AboutUs1() {
   return (
     <>
-      <Header />
+      
       <section className="container-fluid bg-light py-5 d-flex align-items-center justify-content-center" style={{ minHeight: "90vh" }}>
         <div className="bg-white rounded-4 shadow p-4 p-md-5 text-center" style={{ maxWidth: 960 }}>
           <h1 className="text-danger fw-bold mb-4 fs-2 fs-md-1">Câu chuyện doanh nghiệp</h1>
