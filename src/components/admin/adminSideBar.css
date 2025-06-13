@@ -1,0 +1,225 @@
+.admin-sidebar.dark {
+  --body-color: #18191a;
+  --primary-color: #695cfe;
+  --primary-color-light: #3a3b3c;
+  --sidebar-color: #242526;
+  --text-color-admin: #fff;
+  --toggle-color: #ccc;
+}
+
+/* ===== LOGO ADMIN */
+.admin__logo {
+  display: flex;
+  align-items: center;
+
+  color: var(--text-color-admin);
+  margin: 0 0 0 1.5rem;
+}
+.icon-style {
+  font-size: 3.5rem;
+  display: inline-block;
+  line-height: 1;
+  align-items: center;
+}
+
+.admin__logo .text {
+  font-size: 2.5rem;
+  margin: 1rem 2rem;
+  font-weight: 500;
+}
+
+/*======  SIDE BAR  ====== */
+.menu__sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 25rem;
+  padding: 1rem 1.4rem;
+  z-index: 100;
+  background-color: var(--sidebar-color);
+  transition: var(--tran-05);
+}
+
+.menu__sidebar .text {
+  font-size: 1.6rem;
+  font-weight: 500;
+  transition: var(--tran-03);
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.menu__sidebar.close {
+  width: 8.8rem;
+}
+
+.menu__sidebar.close .text {
+  opacity: 0;
+}
+
+/* ===== HEADER ===== */
+.menu__sidebar-header {
+  position: relative;
+}
+
+.menu__sidebar-header .toggle-close-open-sidebar {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  right: -2.5rem;
+  transform: translateY(-50%);
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  color: var(--sidebar-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--tran-03);
+}
+
+.menu__sidebar.close .menu__sidebar-header .toggle-close-open-sidebar {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* ===== SECTION ===== */
+.menu__sidebar .btn-item {
+  display: flex;
+  align-items: center;
+  height: 3.3rem;
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.menu__sidebar .btn-item .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6rem;
+  font-size: 1rem;
+}
+
+.menu__sidebar .btn-item .icon,
+.menu__sidebar .btn-item .text {
+  color: var(--text-color-admin);
+  font-size: 1.1rem;
+  transition: var(--tran-03);
+}
+.menu__sidebar-section .search-box {
+  background-color: var(--primary-color-light);
+  border-radius: 0.6rem;
+}
+
+.search-box input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+  background-color: var(--primary-color-light);
+}
+
+.menu__sidebar .btn-item .btn-link {
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0.6rem;
+  transition: var(--tran-03);
+}
+
+.menu__sidebar .btn-item .btn-link:hover {
+  background-color: var(--primary-color);
+}
+
+.menu__sidebar .btn-item .btn-link:hover .icon,
+.menu__sidebar .btn-item .btn-link:hover .text 
+/* dùng .menu__sidebar .btn-item a:hover .text vì khi di chuyển vào vùng đó thì sẽ đổi màu chữ luôn*/ {
+  color: var(--sidebar-color);
+}
+
+.menu__sidebar-section {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100% - 5rem);
+}
+/* ====== FOOTER ====== */
+
+.menu__sidebar-bottom .mode {
+  position: relative;
+  background-color: var(--primary-color-light);
+}
+
+.menu__sidebar-bottom .mode i {
+  position: absolute;
+}
+
+.menu__sidebar-bottom .mode .moon-sun {
+  align-items: center;
+  height: 5rem;
+  width: 6rem;
+  display: flex;
+}
+.menu__sidebar-bottom .mode i.sun {
+  opacity: 0;
+}
+.admin-sidebar.dark .menu__sidebar-bottom .mode i.sun {
+  opacity: 1;
+}
+.admin-sidebar.dark .menu__sidebar-bottom .mode i.moon {
+  opacity: 0;
+}
+
+.menu__sidebar-bottom .mode .toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 3.3rem;
+  min-width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toggle-switch .switch {
+  position: relative;
+  border-radius: 6rem;
+  height: 2.2rem;
+  width: 4.4rem;
+  background-color: var(--toggle-color);
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  top: 50%;
+  left: 0.5rem;
+  cursor: pointer;
+  transform: translateY(-50%);
+  background-color: var(--sidebar-color);
+  transition: var(--tran-03);
+}
+
+.admin-sidebar.dark .switch::before {
+  left: 2.4rem;
+}
+
+/* ===== main-admin ===== */
+.main-admin {
+  position: relative;
+  left: 25rem;
+  height: 100vh;
+  width: calc(100% - 8.8rem);
+  background-color: var(--body-color);
+  transition: var(--tran-05);
+}
+
+.menu__sidebar.close ~ .main-admin {
+  left: 8.8rem;
+  background-color: var(--body-color);
+}
