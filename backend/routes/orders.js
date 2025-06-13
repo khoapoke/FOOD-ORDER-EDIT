@@ -21,5 +21,22 @@ router.post("/orders", authMiddleware, async (req, res) => {
 
   res.status(201).json({ message: "Order placed successfully!" });
 });
+// GET /orders - Lấy đơn hàng của user hiện tại
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const data = await fs.readFile(ordersFile, "utf8");
+    const allOrders = JSON.parse(data) || [];
+
+    // Chỉ lấy đơn của user đang đăng nhập
+    const userOrders = allOrders.filter(
+      (order) => order.userId === req.user.id,
+    );
+
+    res.status(200).json(userOrders);
+  } catch (err) {
+    console.error("Error reading orders:", err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 export default router;
