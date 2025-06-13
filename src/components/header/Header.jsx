@@ -49,10 +49,15 @@ function Header() {
                 <a class="dropdown-item my-3" href="/aboutus/1">
                   bussiness story
                 </a>
-              </li>
+              </li> 
               <li>
                 <a class="dropdown-item my-3" href="/aboutus/2">
                   About us story
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item my-3" href="/ChatBox/TesrChatBox.html">
+                  Chatbox
                 </a>
               </li>
             </ul>
