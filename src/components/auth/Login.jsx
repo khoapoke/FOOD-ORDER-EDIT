@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../store/AuthContext";
+import Toast from "../ui/Toast"
 import "./Login.css";
 
 export default function Login() {
   const [isActive, setIsActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'error' });
+  const navigate = useNavigate();
+  const { login, register } = useContext(AuthContext);
+  const emailInputRef = useRef(null);
   
   const [loginData, setLoginData] = useState({
     email: '',
@@ -17,6 +25,21 @@ export default function Login() {
   
   const [loginErrors, setLoginErrors] = useState({});
   const [registerErrors, setRegisterErrors] = useState({});
+
+  useEffect(() => {
+    // Auto-focus email input when form opens
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
+  }, [isActive]);
+
+  const showToast = (message, type = 'error') => {
+    setToast({ show: true, message, type });
+  };
+
+  const hideToast = () => {
+    setToast({ show: false, message: '', type: 'error' });
+  };
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,15 +64,7 @@ export default function Login() {
     return '';
   };
 
-  const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData(prev => ({ ...prev, [name]: value }));
-    if (loginErrors[name]) {
-      setLoginErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleLoginSubmit = () => {
+  const handleLoginSubmit = async () => {
     const errors = {};
     if (!loginData.email) {
       errors.email = 'Email là bắt buộc';
@@ -64,20 +79,30 @@ export default function Login() {
     setLoginErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      console.log('Đăng nhập thành công:', loginData);
-      alert('Đăng nhập thành công!\nEmail: ' + loginData.email);
-      setLoginData({ email: '', password: '' });
-    }
-  };
-  const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterData(prev => ({ ...prev, [name]: value }));
-    if (registerErrors[name]) {
-      setRegisterErrors(prev => ({ ...prev, [name]: '' }));
+      setIsLoading(true);
+      try {
+        const result = login(loginData.email, loginData.password);
+        if (result.success) {
+          showToast('Login successful!', 'success');
+          setTimeout(() => {
+            if (result.role === "admin") {
+              navigate("/admin");
+            } else {
+              navigate("/");
+            }
+          }, 1000);
+        } else {
+          showToast('Email or password is incorrect');
+        }
+      } catch (error) {
+        showToast('An error occurred. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
-  const handleRegisterSubmit = () => {
+  const handleRegisterSubmit = async () => {
     const errors = {};
     if (!registerData.email) {
       errors.email = 'Email là bắt buộc';
@@ -95,11 +120,41 @@ export default function Login() {
       errors.confirmPassword = 'Mật khẩu xác nhận không khớp';
     }
     setRegisterErrors(errors);
+
     if (Object.keys(errors).length === 0) {
-      console.log('Đăng ký thành công:', registerData);
-      alert('Đăng ký thành công!\nEmail: ' + registerData.email);
-      setRegisterData({ email: '', password: '', confirmPassword: '' });
+      setIsLoading(true);
+      try {
+        const result = register(registerData.email, registerData.password);
+        if (result.success) {
+          showToast('Registration successful!', 'success');
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        } else {
+          showToast(result.message);
+        }
+      } catch (error) {
+        showToast('An error occurred. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
     }
+  };
+
+  const handleInputChange = (e, isLogin = true) => {
+    const { name, value } = e.target;
+    if (isLogin) {
+      setLoginData(prev => ({ ...prev, [name]: value }));
+      if (loginErrors[name]) {
+        setLoginErrors(prev => ({ ...prev, [name]: '' }));
+      }
+    } else {
+      setRegisterData(prev => ({ ...prev, [name]: value }));
+      if (registerErrors[name]) {
+        setRegisterErrors(prev => ({ ...prev, [name]: '' }));
+      }
+    }
+    hideToast();
   };
 
   const handleKeyPress = (e, submitFunction) => {
@@ -107,8 +162,16 @@ export default function Login() {
       submitFunction();
     }
   };
+
   return (
     <>
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+        />
+      )}
       <div className={`container${isActive ? " active" : ""}`} id="container">
         {/* Register Form */}
         <div className="form-container sign-up">
@@ -127,35 +190,49 @@ export default function Login() {
               name="email"
               placeholder="Email"
               value={registerData.email}
-              onChange={handleRegisterChange}
+              onChange={(e) => handleInputChange(e, false)}
               onKeyDown={(e) => handleKeyPress(e, handleRegisterSubmit)}
               required
             />
-            {registerErrors.email && <span style={{ color: "red", fontSize: "12px" }}>{registerErrors.email}</span>}
+            {registerErrors.email && <span className="error-message">{registerErrors.email}</span>}
   
             <input
               type="password"
               name="password"
               placeholder="Mật khẩu"
               value={registerData.password}
-              onChange={handleRegisterChange}
+              onChange={(e) => handleInputChange(e, false)}
               onKeyDown={(e) => handleKeyPress(e, handleRegisterSubmit)}
               required
             />
-            {registerErrors.password && <span style={{ color: "red", fontSize: "12px" }}>{registerErrors.password}</span>}
+            {registerErrors.password && <span className="error-message">{registerErrors.password}</span>}
   
             <input
               type="password"
               name="confirmPassword"
               placeholder="Xác nhận mật khẩu"
               value={registerData.confirmPassword}
-              onChange={handleRegisterChange}
+              onChange={(e) => handleInputChange(e, false)}
               onKeyDown={(e) => handleKeyPress(e, handleRegisterSubmit)}
               required
             />
-            {registerErrors.confirmPassword && <span style={{ color: "red", fontSize: "12px" }}>{registerErrors.confirmPassword}</span>}
+            {registerErrors.confirmPassword && <span className="error-message">{registerErrors.confirmPassword}</span>}
   
-            <button type="button" onClick={handleRegisterSubmit}>Đăng ký</button>
+            <button 
+              type="button" 
+              onClick={handleRegisterSubmit}
+              disabled={isLoading}
+              className={isLoading ? 'loading' : ''}
+            >
+              {isLoading ? (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i>
+                  Đang xử lý...
+                </>
+              ) : (
+                'Đăng ký'
+              )}
+            </button>
           </form>
         </div>
   
@@ -172,29 +249,44 @@ export default function Login() {
             <span className="text-muted">Sử dụng gmail để đăng nhập</span>
   
             <input
+              ref={emailInputRef}
               type="email"
               name="email"
               placeholder="Email"
               value={loginData.email}
-              onChange={handleLoginChange}
+              onChange={(e) => handleInputChange(e, true)}
               onKeyDown={(e) => handleKeyPress(e, handleLoginSubmit)}
               required
             />
-            {loginErrors.email && <span style={{ color: "red", fontSize: "12px" }}>{loginErrors.email}</span>}
+            {loginErrors.email && <span className="error-message">{loginErrors.email}</span>}
   
             <input
               type="password"
               name="password"
               placeholder="Mật khẩu"
               value={loginData.password}
-              onChange={handleLoginChange}
+              onChange={(e) => handleInputChange(e, true)}
               onKeyDown={(e) => handleKeyPress(e, handleLoginSubmit)}
               required
             />
-            {loginErrors.password && <span style={{ color: "red", fontSize: "12px" }}>{loginErrors.password}</span>}
+            {loginErrors.password && <span className="error-message">{loginErrors.password}</span>}
   
             <a href="#">Quên mật khẩu?</a>
-            <button type="button" onClick={handleLoginSubmit}>Đăng nhập</button>
+            <button 
+              type="button" 
+              onClick={handleLoginSubmit}
+              disabled={isLoading}
+              className={isLoading ? 'loading' : ''}
+            >
+              {isLoading ? (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i>
+                  Đang xử lý...
+                </>
+              ) : (
+                'Đăng nhập'
+              )}
+            </button>
           </form>
         </div>
   

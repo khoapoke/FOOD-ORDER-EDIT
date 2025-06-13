@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
 import MainLayout from "./Layout/MainLayout.jsx";
 import AuthLayout from "./Layout/AuthLayout.jsx";
 import Menu from "./menu/Menu.jsx";
@@ -8,10 +9,26 @@ import LoginPage from "./Components/auth/Login.jsx";
 import Content from "./Components/content/Content.jsx";
 import AboutUs1 from "./components/aboutus/AboutUs1.jsx";
 import AboutUs2 from "./components/aboutus/AboutUs2.jsx";
+import { AuthContextProvider, AuthContext } from "./store/AuthContext";
+
+// Protected Route component
+const ProtectedRoute = ({ children, requireAdmin = false }) => {
+  const { isAuthenticated, user } = useContext(AuthContext);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (requireAdmin && user?.role !== "admin") {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
-    <>
+    <AuthContextProvider>
       <Routes>
         <Route
           path="/"
@@ -40,11 +57,13 @@ function App() {
         <Route
           path="/admin"
           element={
-            <AuthLayout>
-              <AdminSidebar>
-                <AdminPage />
-              </AdminSidebar>
-            </AuthLayout>
+            <ProtectedRoute requireAdmin={true}>
+              <AuthLayout>
+                <AdminSidebar>
+                  <AdminPage />
+                </AdminSidebar>
+              </AuthLayout>
+            </ProtectedRoute>
           }
         />
         <Route
@@ -64,8 +83,11 @@ function App() {
           }
         />
       </Routes>
-    </>
+    </AuthContextProvider>
   );
 }
 
 export default App;
+
+//Email: admin@example.com
+//Password: Admin123

@@ -1,65 +1,102 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useEffect } from "react";
 
-const AuthContext = createContext({
-  token: "",
-  isLoggedIn: false,
+export const AuthContext = createContext({
   user: null,
-  login: (token, user) => {},
+  isAuthenticated: false,
+  login: () => {},
   logout: () => {},
-  updateUser: (user) => {},
+  register: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-
-  const login = useCallback((newToken, userData) => {
-    setToken(newToken);
-    setUser(userData);
-    setIsLoggedIn(true);
-    localStorage.setItem("token", newToken);
-    localStorage.setItem("user", JSON.stringify(userData));
-  }, []);
-
-  const logout = useCallback(() => {
-    setToken(null);
-    setUser(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  }, []);
-
-  const updateUser = useCallback((userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
-  }, []);
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-    
-    if (storedToken && storedUser) {
-      setToken(storedToken);
+    // Check if user is logged in on initial load
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser) {
       setUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
+      setIsAuthenticated(true);
     }
   }, []);
 
+  const login = (email, password) => {
+    // Check for admin login
+    if (email === "admin@example.com" && password === "Admin123") {
+      const adminUser = {
+        email: "admin@example.com",
+        role: "admin",
+      };
+      setUser(adminUser);
+      setIsAuthenticated(true);
+      localStorage.setItem("currentUser", JSON.stringify(adminUser));
+      return { success: true, role: "admin" };
+    }
+
+    // Check for regular user login
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find((u) => u.email === email && u.password === password);
+
+    if (user) {
+      const userData = {
+        email: user.email,
+        role: user.role,
+      };
+      setUser(userData);
+      setIsAuthenticated(true);
+      localStorage.setItem("currentUser", JSON.stringify(userData));
+      return { success: true, role: "user" };
+    }
+
+    return { success: false, message: "Invalid credentials" };
+  };
+
+  const register = (email, password) => {
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    
+    // Check if user already exists
+    if (users.some((u) => u.email === email)) {
+      return { success: false, message: "User already exists" };
+    }
+
+    // Create new user
+    const newUser = {
+      email,
+      password,
+      role: "user",
+    };
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // Auto login after registration
+    const userData = {
+      email: newUser.email,
+      role: newUser.role,
+    };
+    setUser(userData);
+    setIsAuthenticated(true);
+    localStorage.setItem("currentUser", JSON.stringify(userData));
+
+    return { success: true, role: "user" };
+  };
+
+  const logout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem("currentUser");
+  };
+
   const contextValue = {
-    token,
-    isLoggedIn,
     user,
+    isAuthenticated,
     login,
     logout,
-    updateUser,
+    register,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
-};
-
-export default AuthContext; 
+}; 

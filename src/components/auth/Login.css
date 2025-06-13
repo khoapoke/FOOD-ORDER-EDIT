@@ -105,14 +105,16 @@ h1 {
   transition: box-shadow 0.2s;
 }
 .container input:focus {
-  box-shadow: 0 0 0 2px #aa7744;
+  outline: none;
+  border-color: #4070f4;
+  box-shadow: 0 0 0 2px rgba(64, 112, 244, 0.2);
 }
 
 .form-container {
   position: absolute;
   top: 0;
   height: 100%;
-  transition: all 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }
 
 .sign-in {
@@ -153,26 +155,28 @@ h1 {
 }
 
 .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
   margin: 20px 0;
 }
 
-.social-icons a {
-  border: 1px solid #e8d6c3;
-  border-radius: 20%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 3px;
+.social-icons .icon {
   width: 40px;
   height: 40px;
-  color: #e8d6c3;
-  font-size: 1.3rem;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  color: #333;
+  transition: all 0.3s ease;
 }
-.social-icons a:hover {
-  background: #aa7744;
-  color: #fff;
-  border-color: #aa7744;
+
+.social-icons .icon:hover {
+  background: #4070f4;
+  color: white;
+  transform: translateY(-2px);
 }
 
 .toggle-container {
@@ -243,5 +247,60 @@ button.hidden:hover {
   background-color: #fff;
   color: #333;
   border-color: none;
+}
+
+.error-message {
+  color: #ff3b30;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+button.loading i {
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Add hover effects to buttons */
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Add responsive styles */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  .form-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .toggle-container {
+    display: none;
+  }
 }
 

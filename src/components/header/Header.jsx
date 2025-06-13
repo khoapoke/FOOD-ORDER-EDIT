@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import UserMenu from "../ui/UserMenu";
 import "./header.css";
 
 function Header() {
@@ -44,9 +44,7 @@ function Header() {
             <button className="button">Cart</button>
           </li>
           <li>
-            <a className="header_list-item" href="/login">
-              Sign In
-            </a>
+            <UserMenu />
           </li>
         </ul>
       </nav>
