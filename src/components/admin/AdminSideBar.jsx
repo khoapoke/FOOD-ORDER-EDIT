@@ -32,7 +32,7 @@ const AdminDashboard = ({ children }) => {
           <div className="menu__sidebar-btn">
             <div className="search-box btn-item">
               <i className="fa-solid fa-magnifying-glass icon"></i>
-              <input className="" type="search" placeholder="Search for" />
+              <input className="" type="search" placeholder="" />
             </div>
             <div className="menu-list">
               <div className="btn-item">

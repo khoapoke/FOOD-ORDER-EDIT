@@ -32,7 +32,7 @@ const Orders = () => {
   return (
     <div className="orders-container">
       <div className="orders-header">
-        <h1>Orders Management</h1>
+        <h1 style={{color: "var(--text-color-admin)"}}>Orders Management</h1>
         <div className="order-stats">
           <div className="stat-item">
             <span className="stat-label">Total Orders</span>

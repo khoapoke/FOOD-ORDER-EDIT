@@ -63,7 +63,7 @@ const Statistics = () => {
 
   return (
     <div className="statistics-container">
-      <h1>Statistics & Reports</h1>
+      <h1 style={{color: "var(--text-color-admin)"}}>Statistics & Reports</h1>
       
       <div className="charts-grid">
         <div className="chart-card">

@@ -8,7 +8,7 @@ const Settings = () => {
 
   return (
     <div className="settings-container">
-      <h1>Settings</h1>
+      <h1 style={{color: "var(--text-color-admin)"}}>Settings</h1>
       <form className="settings-form">
         <div className="form-group">
           <label>Email</label>

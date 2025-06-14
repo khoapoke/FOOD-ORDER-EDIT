@@ -11,7 +11,7 @@ const Users = () => {
   return (
     <div className="users-container">
       <div className="users-header">
-        <h1>Users Management</h1>
+        <h1 style={{color: "var(--text-color-admin)"}}>Users Management</h1>
         <button className="add-user-btn">
           <i className="fa-solid fa-plus"></i> Add New User
         </button>

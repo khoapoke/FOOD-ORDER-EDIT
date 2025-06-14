@@ -4,7 +4,7 @@ import './Dashboard.css';
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
-      <h1>Dashboard</h1>
+      <h1 style={{color: "var(--text-color-admin)"}}>Dashboard</h1>
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon">

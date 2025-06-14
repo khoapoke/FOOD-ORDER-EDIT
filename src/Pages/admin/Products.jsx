@@ -27,7 +27,7 @@ const Products = () => {
   return (
     <div className="products-container">
       <div className="products-header">
-        <h1>Products Management</h1>
+        <h1 style={{color: "var(--text-color-admin)"}}>Products Management</h1>
         <button className="add-product-btn">
           <i className="fa-solid fa-plus"></i> Add New Product
         </button>
