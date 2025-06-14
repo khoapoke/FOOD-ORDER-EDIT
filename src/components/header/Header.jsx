@@ -64,8 +64,8 @@ function Header() {
   };
 
   const handleShowCheckout = () => {
-    userProgressCtx.showCheckout();
     setIsCartOpen(false);
+    navigate('/checkout');
   };
 
   const handleUserMenuClick = () => {
@@ -82,7 +82,6 @@ function Header() {
     navigate('/profile');
     setIsUserMenuOpen(false);
   };
-
   return (
     <header id="main-header">
       <button className="open_sidebar-button" onClick={openSidebar}>

@@ -17,6 +17,7 @@ import "swiper/css/pagination";
 import "./content.css";
 
 import CountUp from "react-countup";
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 function Content() {
   const { data: meals, isLoading, error } = useFetch(fetchAvailableMeals, []);
@@ -30,6 +31,11 @@ function Content() {
       amount: 1
     });
   };
+
+  const [statsRef, isStatsVisible] = useIntersectionObserver({
+    threshold: 0.5,
+    rootMargin: '0px'
+  });
 
   useEffect(() => {
     new SwiperCore(".slide-wrapper", {
@@ -308,6 +314,111 @@ function Content() {
           </div>
         </div>
       </div>
+      
+      {/* Chef -introduce */}
+      <div className="row mt-5">
+        <div className="chef-container">
+          <div className="section-title">
+            <h2>Đội Ngũ Bếp Trưởng</h2>
+            <p className="section-subtitle">
+              Những bàn tay vàng tạo nên hương vị đặc biệt
+            </p>
+          </div>
+
+          <div className="main-chef">
+            <div className="chef-content">
+              <div className="chef-image">
+                <img
+                  src="/img/chef.jpg"
+                  alt="Head Chef"
+                  className="chef-avatar"
+                />
+                <div className="chef-badge">👑 Head Chef</div>
+              </div>
+              <div className="chef-info">
+                <h3>
+                  Chef Marco Antonio <span className="crown-icon">👑</span>
+                </h3>
+                <div className="chef-title">Bếp Trưởng & Sáng Lập Viên</div>
+                <p className="chef-description">
+                  Với hơn 15 năm kinh nghiệm trong ngành ẩm thực quốc tế, Chef
+                  Marco đã từng làm việc tại các nhà hàng 5 sao ở Ý, Pháp và
+                  Việt Nam. Ông là người đã tạo ra những công thức độc đáo, kết
+                  hợp tinh tế giữa hương vị châu Âu và châu Á, mang đến trải
+                  nghiệm ẩm thực không thể quên.
+                </p>
+                <div className="chef-stats">
+                  <div className="stat-item-feedback">
+                    <span className="stat-number">15+</span>
+                    <div className="stat-label">Năm kinh nghiệm</div>
+                  </div>
+                  <div className="stat-item-feedback">
+                    <span className="stat-number">200+</span>
+                    <div className="stat-label">Món ăn sáng tạo</div>
+                  </div>
+                  <div className="stat-item-feedback">
+                    <span className="stat-number">5</span>
+                    <div className="stat-label">Giải thưởng</div>
+                  </div>
+                </div>
+                <div className="chef-specialties">
+                  <span className="specialty-tag">🍝 Pasta Ý</span>
+                  <span className="specialty-tag">🍕 Pizza Thủ Công</span>
+                  <span className="specialty-tag">🥘 Fusion Cuisine</span>
+                  <span className="specialty-tag">🍤 Hải Sản</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="team-chefs">
+            <h3 className="team-title">Đội Ngũ Bếp Phó</h3>
+            <div className="team-grid">
+              <div className="team-card">
+                <img
+                  src="/img/chef.jpg"
+                  alt="Sous Chef"
+                  className="team-avatar"
+                />
+                <h4 className="team-name">Chef Nguyễn Minh</h4>
+                <div className="team-role">Bếp Phó - Chuyên Món Á</div>
+                <p className="team-description">
+                  Chuyên gia về các món ăn châu Á với 8 năm kinh nghiệm. Đặc
+                  biệt giỏi trong việc chế biến các món Việt Nam hiện đại.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <img
+                  src="/img/chef.jpg"
+                  alt="Pastry Chef"
+                  className="team-avatar"
+                />
+                <h4 className="team-name">Chef Sarah Johnson</h4>
+                <div className="team-role">Bếp Trưởng Bánh Ngọt</div>
+                <p className="team-description">
+                  Tốt nghiệp Le Cordon Bleu Paris, chuyên về bánh ngọt Pháp và
+                  các món tráng miệng sáng tạo độc đáo.
+                </p>
+              </div>
+
+              <div className="team-card">
+                <img
+                  src="/img/chef.jpg"
+                  alt="Grill Chef"
+                  className="team-avatar"
+                />
+                <h4 className="team-name">Chef David Kim</h4>
+                <div className="team-role">Chuyên Gia Nướng</div>
+                <p className="team-description">
+                  Bậc thầy trong việc nướng thịt và hải sản, với kỹ thuật nướng
+                  than hồng truyền thống kết hợp hiện đại.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* customer feedback */}
       <div className="row customer-feedback">
         <div className="customer-feedback-container">
@@ -408,133 +519,37 @@ function Content() {
 
       {/* Stats Race */}
       <div className="row" style={{ padding: "0 10rem" }}>
-        <div className="stats-section">
+        <div className="stats-section" ref={statsRef}>
           <h3 style={{ color: "#fff", marginBottom: "10px" }}>
             Thống Kê Đánh Giá
           </h3>
           <div className="stats-grid">
-            <div className="stat-item">
-              <div className="stat-number"><CountUp duration={2} end={4}/>.<CountUp duration={2} end={8}/></div>
+            <div className="stat-item-feedback">
+              <div className="stat-number">
+                {isStatsVisible && <CountUp duration={2} end={4}/>}.{isStatsVisible && <CountUp duration={2} end={8}/>}
+              </div>
               <div className="stat-label">Điểm trung bình</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-number"><CountUp duration={2} end={1217}/></div>
+            <div className="stat-item-feedback">
+              <div className="stat-number">
+                {isStatsVisible && <CountUp duration={2} end={1217}/>}
+              </div>
               <div className="stat-label">Lượt đánh giá</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-number"><CountUp duration={2} end={98}/>%</div>
+            <div className="stat-item-feedback">
+              <div className="stat-number">
+                {isStatsVisible && <CountUp duration={2} end={98}/>}%
+              </div>
               <div className="stat-label">Khách hài lòng</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-number"><CountUp duration={2} end={3}/></div>
+            <div className="stat-item-feedback">
+              <div className="stat-number">
+                {isStatsVisible && <CountUp duration={2} end={3}/>}
+              </div>
               <div className="stat-label">Năm phục vụ</div>
             </div>
           </div>
           <button className="view-all-btn">Xem Thêm Đánh Giá</button>
-        </div>
-      </div>
-      {/* Chef -introduce */}
-      <div className="row mt-5">
-        <div className="chef-container">
-          <div className="section-title">
-            <h2>Đội Ngũ Bếp Trưởng</h2>
-            <p className="section-subtitle">
-              Những bàn tay vàng tạo nên hương vị đặc biệt
-            </p>
-          </div>
-
-          <div className="main-chef">
-            <div className="chef-content">
-              <div className="chef-image">
-                <img
-                  src="/img/chef.jpg"
-                  alt="Head Chef"
-                  className="chef-avatar"
-                />
-                <div className="chef-badge">👑 Head Chef</div>
-              </div>
-              <div className="chef-info">
-                <h3>
-                  Chef Marco Antonio <span className="crown-icon">👑</span>
-                </h3>
-                <div className="chef-title">Bếp Trưởng & Sáng Lập Viên</div>
-                <p className="chef-description">
-                  Với hơn 15 năm kinh nghiệm trong ngành ẩm thực quốc tế, Chef
-                  Marco đã từng làm việc tại các nhà hàng 5 sao ở Ý, Pháp và
-                  Việt Nam. Ông là người đã tạo ra những công thức độc đáo, kết
-                  hợp tinh tế giữa hương vị châu Âu và châu Á, mang đến trải
-                  nghiệm ẩm thực không thể quên.
-                </p>
-                <div className="chef-stats">
-                  <div className="stat-item">
-                    <span className="stat-number">15+</span>
-                    <div className="stat-label">Năm kinh nghiệm</div>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">200+</span>
-                    <div className="stat-label">Món ăn sáng tạo</div>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">5</span>
-                    <div className="stat-label">Giải thưởng</div>
-                  </div>
-                </div>
-                <div className="chef-specialties">
-                  <span className="specialty-tag">🍝 Pasta Ý</span>
-                  <span className="specialty-tag">🍕 Pizza Thủ Công</span>
-                  <span className="specialty-tag">🥘 Fusion Cuisine</span>
-                  <span className="specialty-tag">🍤 Hải Sản</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="team-chefs">
-            <h3 className="team-title">Đội Ngũ Bếp Phó</h3>
-            <div className="team-grid">
-              <div className="team-card">
-                <img
-                  src="/img/chef.jpg"
-                  alt="Sous Chef"
-                  className="team-avatar"
-                />
-                <h4 className="team-name">Chef Nguyễn Minh</h4>
-                <div className="team-role">Bếp Phó - Chuyên Món Á</div>
-                <p className="team-description">
-                  Chuyên gia về các món ăn châu Á với 8 năm kinh nghiệm. Đặc
-                  biệt giỏi trong việc chế biến các món Việt Nam hiện đại.
-                </p>
-              </div>
-
-              <div className="team-card">
-                <img
-                  src="/img/chef.jpg"
-                  alt="Pastry Chef"
-                  className="team-avatar"
-                />
-                <h4 className="team-name">Chef Sarah Johnson</h4>
-                <div className="team-role">Bếp Trưởng Bánh Ngọt</div>
-                <p className="team-description">
-                  Tốt nghiệp Le Cordon Bleu Paris, chuyên về bánh ngọt Pháp và
-                  các món tráng miệng sáng tạo độc đáo.
-                </p>
-              </div>
-
-              <div className="team-card">
-                <img
-                  src="/img/chef.jpg"
-                  alt="Grill Chef"
-                  className="team-avatar"
-                />
-                <h4 className="team-name">Chef David Kim</h4>
-                <div className="team-role">Chuyên Gia Nướng</div>
-                <p className="team-description">
-                  Bậc thầy trong việc nướng thịt và hải sản, với kỹ thuật nướng
-                  than hồng truyền thống kết hợp hiện đại.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

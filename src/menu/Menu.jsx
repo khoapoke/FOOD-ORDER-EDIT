@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { fetchAvailableMeals } from "../util/http";
 import { CartContext } from "../store/CartContext";
+import { Link } from "react-router-dom";
 import "./menu.css";
 
 function Menu() {
@@ -59,15 +60,18 @@ function Menu() {
                 style={{ width: "40rem" }}
               >
                 <article>
-                  <img
-                    alt={meal.name}
-                    src={`http://localhost:3000/${meal.image}`}
-                  />
-                  <div>
-                    <h3>{meal.name}</h3>
-                    <p className="meal-item-price">${meal.price}</p>
-                    <p className="meal-item-description">{meal.description}</p>
-                  </div>
+                  <Link to={`/menu/${meal.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                    <img
+                      alt={meal.name}
+                      src={`http://localhost:3000/${meal.image}`}
+                      style={{ cursor: "pointer" }}
+                    />
+                    <div>
+                      <h3>{meal.name}</h3>
+                      <p className="meal-item-price">${meal.price}</p>
+                      <p className="meal-item-description">{meal.description}</p>
+                    </div>
+                  </Link>
                   <p className="meal-item-actions">
                     <button className="button" onClick={() => handleAddMealToCart(meal)}>
                       Add to Cart

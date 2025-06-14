@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./adminSideBar.css";
 const AdminDashboard = ({ children }) => {
   const [isDark, setIsDark] = useState(false);
@@ -25,7 +26,6 @@ const AdminDashboard = ({ children }) => {
           <i
             className="fa-solid fa-chevron-left toggle-close-open-sidebar"
             onClick={handleToggle}
-            
           ></i>
         </div>
         <div className="menu__sidebar-section">
@@ -36,40 +36,46 @@ const AdminDashboard = ({ children }) => {
             </div>
             <div className="menu-list">
               <div className="btn-item">
-                <a className="btn-link" href="#">
+                <Link className="btn-link" to="/admin/foods">
+                  <i className="fa-solid fa-utensils icon"></i>
+                  <span className="text">Foods</span>
+                </Link>
+              </div>
+              <div className="btn-item">
+                <Link className="btn-link" to="/admin/dashboard">
                   <i className="fa-solid fa-house icon"></i>
                   <span className="text">Dashboard</span>
-                </a>
+                </Link>
               </div>
               <div className="btn-item">
-                <a className="btn-link" href="#">
+                <Link className="btn-link" to="/admin/users">
                   <i className="fa-solid fa-user icon"></i>
                   <span className="text">Users</span>
-                </a>
+                </Link>
               </div>
               <div className="btn-item">
-                <a className="btn-link" href="#">
+                <Link className="btn-link" to="/admin/products">
                   <i className="fa-solid fa-box icon"></i>
                   <span className="text">Products</span>
-                </a>
+                </Link>
               </div>
               <div className="btn-item">
-                <a className="btn-link" href="#">
+                <Link className="btn-link" to="/admin/orders">
                   <i className="fa-solid fa-cart-shopping icon"></i>
                   <span className="text">Orders</span>
-                </a>
+                </Link>
               </div>
               <div className="btn-item">
-                <a className="btn-link" href="#">
+                <Link className="btn-link" to="/admin/statistics">
                   <i className="fa-solid fa-chart-simple icon"></i>
                   <span className="text">Statistical & Reports</span>
-                </a>
+                </Link>
               </div>
               <div className="btn-item">
-                <a className="btn-link" href="#">
+                <Link className="btn-link" to="/admin/settings">
                   <i className="fa-solid fa-gear icon"></i>
                   <span className="text">Settings</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

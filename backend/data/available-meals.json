@@ -131,12 +131,5 @@
     "price": "6.99",
     "description": "A creamy cheesecake with a tangy lemon flavor, served on a crumbly biscuit base.",
     "image": "images/lemon-cheesecake.jpg"
-  },
-  {
-    "id": "m20",
-    "name": "Falafel Wrap",
-    "price": "8.99",
-    "description": "Crispy falafels wrapped in a warm pita with lettuce, tomatoes, and a tahini sauce.",
-    "image": "images/falafel-wrap.jpg"
   }
 ]
