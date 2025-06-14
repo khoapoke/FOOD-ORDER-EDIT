@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { fetchAvailableMeals } from "../../util/http";
+import { CartContext } from "../../store/CartContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 
@@ -15,11 +16,24 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./content.css";
 
+import CountUp from "react-countup";
+
 function Content() {
   const { data: meals, isLoading, error } = useFetch(fetchAvailableMeals, []);
+  const cartCtx = useContext(CartContext);
+
+  const handleAddMealToCart = (meal) => {
+    cartCtx.addItem({
+      id: meal.id,
+      name: meal.name,
+      price: meal.price,
+      amount: 1
+    });
+  };
+
   useEffect(() => {
     new SwiperCore(".slide-wrapper", {
-      loop: true,
+      loop: Array.isArray(meals) && meals.length > 2,
       grabCursor: true,
       spaceBetween: 20,
 
@@ -160,7 +174,12 @@ function Content() {
                         </p>
                       </div>
                       <p className="meal-item-actions">
-                        <button className="button">Add to Cart</button>
+                        <button 
+                          className="button" 
+                          onClick={() => handleAddMealToCart(meal)}
+                        >
+                          Add to Cart
+                        </button>
                       </p>
                     </article>
                   </div>
@@ -395,19 +414,19 @@ function Content() {
           </h3>
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-number">4.8</div>
+              <div className="stat-number"><CountUp duration={2} end={4}/>.<CountUp duration={2} end={8}/></div>
               <div className="stat-label">Điểm trung bình</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">1,247</div>
+              <div className="stat-number"><CountUp duration={2} end={1217}/></div>
               <div className="stat-label">Lượt đánh giá</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">98%</div>
+              <div className="stat-number"><CountUp duration={2} end={98}/>%</div>
               <div className="stat-label">Khách hài lòng</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">3</div>
+              <div className="stat-number"><CountUp duration={2} end={3}/></div>
               <div className="stat-label">Năm phục vụ</div>
             </div>
           </div>

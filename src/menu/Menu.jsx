@@ -1,15 +1,25 @@
 import { useContext } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { fetchAvailableMeals } from "../util/http";
-import CartContext from "../store/CartContext";
+import { CartContext } from "../store/CartContext";
+import "./menu.css";
 
 function Menu() {
   const { data: meals, isLoading, error } = useFetch(fetchAvailableMeals, []);
-  const { items, addItem, removeItem, clearItem } = useContext(CartContext);
-  const total = items.reduce(
+  const cartCtx = useContext(CartContext);
+  const total = cartCtx.items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
+
+  const handleAddMealToCart = (meal) => {
+    cartCtx.addItem({
+      id: meal.id,
+      name: meal.name,
+      price: meal.price,
+      amount: 1
+    });
+  };
 
   return (
     <>
@@ -59,7 +69,7 @@ function Menu() {
                     <p className="meal-item-description">{meal.description}</p>
                   </div>
                   <p className="meal-item-actions">
-                    <button className="button" onClick={() => addItem(meal)}>
+                    <button className="button" onClick={() => handleAddMealToCart(meal)}>
                       Add to Cart
                     </button>
                   </p>

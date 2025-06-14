@@ -7,6 +7,28 @@ import jwt from "jsonwebtoken";
 const router = express.Router();
 const USERS_FILE = "./data/users.json";
 
+// Helper function to read users
+async function readUsers() {
+  try {
+    const data = await fs.readFile(USERS_FILE, "utf8");
+    return JSON.parse(data);
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      // If file doesn't exist, create it with admin user
+      const adminUser = {
+        id: uuidv4(),
+        name: "Admin",
+        email: "admin@example.com",
+        password: await bcrypt.hash("admin123", 10),
+        role: "admin"
+      };
+      await fs.writeFile(USERS_FILE, JSON.stringify([adminUser], null, 2));
+      return [adminUser];
+    }
+    throw err;
+  }
+}
+
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -15,16 +37,7 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    let users = [];
-    try {
-      const data = await fs.readFile(USERS_FILE, "utf8");
-      users = JSON.parse(data);
-    } catch (err) {
-      if (err.code !== "ENOENT") {
-        console.error("Error reading users file:", err);
-        return res.status(500).json({ message: "Server Error" });
-      }
-    }
+    const users = await readUsers();
 
     const existingUser = users.find((user) => user.email === email);
     if (existingUser) {
@@ -38,6 +51,7 @@ router.post("/register", async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role: "user" // Default role for new registrations
     };
 
     users.push(newUser);
@@ -49,23 +63,16 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Email and password are required" });
     }
 
-    let users = [];
-    try {
-      const data = await fs.readFile(USERS_FILE, "utf8");
-      users = JSON.parse(data);
-    } catch (err) {
-      return res.status(500).json({ message: "Server Error" });
-    }
+    const users = await readUsers();
 
     const user = users.find((u) => u.email === email);
     if (!user) {
@@ -77,15 +84,25 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    // Create user object without password
+    const userWithoutPassword = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role
+    };
+
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      },
+      { expiresIn: "1h" }
     );
 
-    res.status(200).json({ message: "Login successful", token, user });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: userWithoutPassword
+    });
   } catch (error) {
     console.error("Error in login:", error);
     res.status(500).json({ message: "Server Error" });
@@ -94,12 +111,9 @@ router.post("/login", async (req, res) => {
 
 router.get("/users", async (req, res) => {
   try {
-    const data = await fs.readFile(USERS_FILE, "utf8");
-    const users = JSON.parse(data);
-
-    // Không trả về mật khẩu
+    const users = await readUsers();
+    // Remove passwords from response
     const sanitizedUsers = users.map(({ password, ...rest }) => rest);
-
     res.status(200).json(sanitizedUsers);
   } catch (err) {
     console.error("Error reading users:", err);

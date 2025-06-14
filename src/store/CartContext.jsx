@@ -1,6 +1,6 @@
 import { createContext, useReducer } from "react";
 
-const CartContext = createContext({
+export const CartContext = createContext({
   items: [],
   addItem: (item) => {},
   removeItem: (id) => {},
@@ -25,26 +25,24 @@ function cartReducer(state, action) {
         updatedItems.push({ ...action.item, quantity: 1 });
       }
       return { ...state, items: updatedItems };
-      case "REMOVE_ITEM":
-        const removeItemIndex = state.items.findIndex(
-          (item) => item.id === action.id
-        );
-        const removeItem = state.items[removeItemIndex];
-        const removeItemUpdatedItems = [...state.items];
-        if (removeItem.quantity === 1) {
-          removeItemUpdatedItems.splice(removeItemIndex, 1);
-        } else {
-          const updatedItem = {
-            ...removeItem,
-            quantity: removeItem.quantity - 1,
-          };
-          removeItemUpdatedItems[removeItemIndex] = updatedItem;
-        }
-        return { ...state, items: removeItemUpdatedItems };
-
+    case "REMOVE_ITEM":
+      const removeItemIndex = state.items.findIndex(
+        (item) => item.id === action.id
+      );
+      const removeItem = state.items[removeItemIndex];
+      const removeItemUpdatedItems = [...state.items];
+      if (removeItem.quantity === 1) {
+        removeItemUpdatedItems.splice(removeItemIndex, 1);
+      } else {
+        const updatedItem = {
+          ...removeItem,
+          quantity: removeItem.quantity - 1,
+        };
+        removeItemUpdatedItems[removeItemIndex] = updatedItem;
+      }
+      return { ...state, items: removeItemUpdatedItems };
     case "CLEAR_ITEM":
       return { ...state, items: [] };
-
     default:
       return state;
   }
@@ -73,5 +71,3 @@ export function CartContextProvider({ children }) {
     <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
   );
 }
-
-export default CartContext;

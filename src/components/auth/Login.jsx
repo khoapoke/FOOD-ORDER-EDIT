@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
+// Admin credentials
+const ADMIN_CREDENTIALS = {
+  email: "admin@foodorder.com",
+  password: "Admin@123",
+  role: "admin"
+};
+
 export default function Login() {
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [registerData, setRegisterData] = useState({
     email: "",
@@ -23,10 +32,19 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
-  const emailAdmin = "admin123@gmail.com";
-  const passwordAdmin = "1234Ngay";
+
   const handleRegister = () => {
     const newErrors = { email: "", password: "", confirmPassword: "" };
 
@@ -51,32 +69,31 @@ export default function Login() {
 
     const isValid = Object.values(newErrors).every((e) => e === "");
     if (isValid) {
-      fetch("http://localhost:3000/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: "User", // bạn có thể thêm input tên nếu muốn
-          email: registerData.email,
-          password: registerData.password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message === "User registered successfully!") {
-            alert("Đăng ký thành công");
-            setIsActive(false); // chuyển qua trang đăng nhập
-          } else {
-            alert("Lỗi: " + data.message);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          alert("Có lỗi xảy ra khi đăng ký.");
-        });
+      // Get existing users from localStorage
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      
+      // Check if email already exists
+      if (users.some(user => user.email === registerData.email)) {
+        alert("Email đã tồn tại!");
+        return;
+      }
 
-      // Gửi dữ liệu lên server ở đây............
+      // Add new user
+      const newUser = {
+        email: registerData.email,
+        password: registerData.password,
+        role: 'user'
+      };
+      
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      alert("Đăng ký thành công");
+      setIsActive(false);
+      setRegisterData({ email: "", password: "", confirmPassword: "" });
     }
   };
+
   const handleLogin = () => {
     const newErrors = { email: "", password: "" };
 
@@ -90,43 +107,50 @@ export default function Login() {
       newErrors.password = "Mật khẩu không được để trống";
     }
 
-    if (
-      loginData.email === emailAdmin &&
-      loginData.password === passwordAdmin
-    ) {
-      alert("Đăng nhập với tư cách admin");
-      window.location.href = "/admin";
-      return;
-    }
     setLoginErrors(newErrors);
 
     const isValid = Object.values(newErrors).every((e) => e === "");
     if (isValid) {
-      fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.token) {
-            alert("Đăng nhập thành công!");
-            localStorage.setItem("token", data.token); // Lưu token vào localStorage
-            window.location.href = "/users"; // Chuyển trang
-          } else {
-            alert("" + data.message);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          alert("Có lỗi xảy ra khi đăng nhập.");
-        });
-      // Thực hiện xử lý tiếp theo ở đây
+      // Check for admin login
+      if (loginData.email === ADMIN_CREDENTIALS.email && loginData.password === ADMIN_CREDENTIALS.password) {
+        localStorage.setItem('currentUser', JSON.stringify(ADMIN_CREDENTIALS));
+        setCurrentUser(ADMIN_CREDENTIALS);
+        navigate('/admin');
+        return;
+      }
+
+      // Check for regular user login
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === loginData.email && u.password === loginData.password);
+
+      if (user) {
+        const userData = {
+          email: user.email,
+          role: 'user'
+        };
+        localStorage.setItem('currentUser', JSON.stringify(userData));
+        setCurrentUser(userData);
+        navigate('/');
+      } else {
+        alert("Email hoặc mật khẩu không đúng!");
+      }
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setCurrentUser(null);
+    navigate('/');
+  };
+
+  if (currentUser) {
+    return (
+      <div className="user-info">
+        <p>Xin chào, {currentUser.email}</p>
+        <button onClick={handleLogout}>Đăng xuất</button>
+      </div>
+    );
+  }
 
   return (
     <>

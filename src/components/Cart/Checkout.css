@@ -1,0 +1,28 @@
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid #e4ddd4;
+  }
+  
+  .modal-actions .text-button {
+    color: #1d1a16;
+    transition: all 0.3s ease;
+  }
+  
+  .modal-actions .text-button:hover,
+  .modal-actions .text-button:active {
+    color: #312c1d;
+    transform: translateX(-5px);
+  }
+  
+  .modal-actions .button {
+    transition: all 0.3s ease;
+  }
+  
+  .modal-actions .button:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(255, 196, 4, 0.3);
+  }
