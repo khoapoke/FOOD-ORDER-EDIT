@@ -4,13 +4,17 @@ import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import orderRoutes from "./routes/orders.js";
 import mealRoutes from "./routes/meals.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Log all requests
 app.use((req, res, next) => {
@@ -18,15 +22,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static files from frontend/dist
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
 app.use("/auth", authRoutes);
 app.use("/orders", orderRoutes);
 app.use("/meals", mealRoutes);
 
-app.use((req, res) => {
-  console.log("404 Not Found:", req.method, req.url);
-  res.status(404).json({ message: "Not found" });
+// Fallback: serve index.html for any other route (SPA)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

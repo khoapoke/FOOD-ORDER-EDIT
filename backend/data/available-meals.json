@@ -1,12 +1,5 @@
 [
   {
-    "id": "m1",
-    "name": "Mac & Cheese",
-    "price": 8.99,
-    "description": "Creamy cheddar cheese mixed with perfectly cooked macaroni, topped with crispy breadcrumbs. A classic comfort food. Hoho",
-    "image": "images/mac-and-cheese.jpg"
-  },
-  {
     "id": "m2",
     "name": "Margherita Pizza",
     "price": "12.99",
@@ -131,5 +124,12 @@
     "price": "6.99",
     "description": "A creamy cheesecake with a tangy lemon flavor, served on a crumbly biscuit base.",
     "image": "images/lemon-cheesecake.jpg"
+  },
+  {
+    "id": "1749872034324",
+    "name": "Bánh mì",
+    "price": 3.5,
+    "description": "Bánh mì thịt chả",
+    "image": "/images/1749872034316-25404905-switch.png"
   }
 ]
